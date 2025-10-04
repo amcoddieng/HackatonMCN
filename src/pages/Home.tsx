@@ -1,6 +1,7 @@
 // src/pages/Home.tsx
 
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { QrCode, BookOpen, Globe, MessageCircle, Award, Calendar, Users } from 'lucide-react';
 import { getUserProgress } from '../utils/localStorageHelpers';
 
@@ -39,16 +40,16 @@ export const Home = () => {
 
             {/* Boutons d'action */}
             <div className="flex flex-col sm:flex-row gap-4">
-              
-              <a  href="/scan"
+              <Link
+                to="/scan"
                 className="group flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-semibold"
               >
                 <QrCode size={24} className="group-hover:scale-110 transition-transform" />
                 <span>Scanner QR</span>
-              </a>
+              </Link>
               
-              
-              <a  href="/catalogue"
+              <Link
+                to="/catalogue"
                 className="group flex items-center justify-center space-x-3 px-8 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-semibold"
               >
                 <BookOpen size={24} className="group-hover:scale-110 transition-transform" />
@@ -57,7 +58,7 @@ export const Home = () => {
                    lang === 'en' ? 'Browse Catalogue' :
                    'Gis Catalogue'}
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -84,9 +85,9 @@ export const Home = () => {
                      lang === 'en' ? 'Explore the museum from anywhere in the world with our immersive virtual tour.' :
                      'Xool musée ci kuy nekk ci àdduna bi ak visite virtuelle immersive.'}
                   </p>
-                  <a href="/virtual-tour" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
+                  <Link to="/virtual-tour" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
                     Découvrir →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -129,9 +130,9 @@ export const Home = () => {
                   <p className="text-gray-400 leading-relaxed mb-4">
                     Badges: {progress.badges.length}
                   </p>
-                  <a href="/account" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
+                  <Link to="/account" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
                     Voir mes badges →
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -158,12 +159,12 @@ export const Home = () => {
                  lang === 'en' ? 'Book your guided tour and enjoy a personalized experience at the Museum of Black Civilizations.' :
                  'Réserver visite guidée bi te am expérience personnalisée ci MCN.'}
               </p>
-              <a 
-                href="/visit-planner"
+              <Link 
+                to="/visit-planner"
                 className="inline-block px-6 py-3 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-yellow-500 transition-all"
               >
                 Réserver maintenant
-              </a>
+              </Link>
             </div>
 
             {/* Contribuer */}
@@ -181,12 +182,12 @@ export const Home = () => {
                  lang === 'en' ? 'Share your testimony, memories or knowledge about the works in our collection.' :
                  'Jox sa témoignage, sa xeeti wala sa xam-xam ci liggéey yi.'}
               </p>
-              <a 
-                href="/contribution"
+              <Link 
+                to="/contribution"
                 className="inline-block px-6 py-3 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-yellow-500 transition-all"
               >
                 Partager mon histoire
-              </a>
+              </Link>
             </div>
           </div>
         </div>
