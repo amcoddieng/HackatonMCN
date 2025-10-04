@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> amcoddieng/dev1/infrastructure
 logs
 *.log
 npm-debug.log*
@@ -23,4 +26,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+<<<<<<< HEAD
+>>>>>>> amcoddieng/dev1/infrastructure
+=======
 >>>>>>> amcoddieng/dev1/infrastructure
