@@ -1,3 +1,4 @@
+// src/pages/QuizPage.tsx
 import { useState } from 'react';
 import { Trophy, Award, Star, Home } from 'lucide-react';
 import { Quiz, QuizQuestion } from '../components/Quiz';
@@ -10,42 +11,77 @@ interface Badge {
   earnedAt: string;
 }
 
-// Questions mockées sur la culture et l'art africain
+// Questions sur la culture et l'art africain en général
 const culturalQuizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "Que représente principalement cette tapisserie?",
+    question: "Que représente principalement cette tapisserie historique wolof?",
     options: ["Des batailles", "Des migrations", "Des mariages", "Des récoltes"],
     correctAnswer: 0,
-    explanation: "Cette tapisserie historique représente des scènes de batailles importantes dans l'histoire wolof."
+    explanation: "Les tapisseries historiques wolof représentent souvent des scènes de batailles importantes et des événements marquants de l'histoire des royaumes."
   },
   {
     id: 2,
     question: "Quel royaume wolof était connu pour sa puissance militaire?",
     options: ["Sine", "Cayor", "Saloum", "Walo"],
     correctAnswer: 1,
-    explanation: "Le royaume du Cayor était réputé pour sa puissance militaire et ses Damel (rois) guerriers."
+    explanation: "Le royaume du Cayor était réputé pour sa puissance militaire et ses Damel (rois) guerriers qui ont résisté aux invasions."
   },
   {
     id: 3,
-    question: "Quelle est la signification des masques traditionnels?",
-    options: ["Décoration uniquement", "Protection spirituelle", "Commerce", "Jeux"],
+    question: "Quelle est la signification des masques traditionnels dans la culture wolof?",
+    options: ["Décoration uniquement", "Protection spirituelle et connexion ancestrale", "Commerce", "Jeux"],
     correctAnswer: 1,
-    explanation: "Les masques traditionnels avaient une fonction spirituelle et protectrice importante dans les rituels."
+    explanation: "Les masques traditionnels avaient une fonction spirituelle et protectrice importante, servant d'intermédiaires avec les ancêtres."
   },
   {
     id: 4,
     question: "Quel instrument est emblématique de la musique wolof?",
     options: ["Djembé", "Kora", "Sabar", "Balafon"],
     correctAnswer: 2,
-    explanation: "Le Sabar est l'instrument de percussion emblématique de la culture wolof."
+    explanation: "Le Sabar est l'instrument de percussion emblématique de la culture wolof, présent dans toutes les célébrations importantes."
   },
   {
     id: 5,
-    question: "Que symbolise la couleur jaune dans les textiles traditionnels?",
+    question: "Que symbolise la couleur jaune dans les textiles traditionnels sénégalais?",
     options: ["La mort", "La richesse et la royauté", "La guerre", "L'eau"],
     correctAnswer: 1,
     explanation: "Le jaune symbolise la richesse, la royauté et la prospérité dans les textiles traditionnels sénégalais."
+  },
+  {
+    id: 6,
+    question: "Qui étaient les griots dans la société wolof?",
+    options: ["Des guerriers", "Des gardiens de la tradition orale et de l'histoire", "Des agriculteurs", "Des commerçants"],
+    correctAnswer: 1,
+    explanation: "Les griots (gewël) étaient les gardiens de la tradition orale, responsables de la transmission de l'histoire et des généalogies."
+  },
+  {
+    id: 7,
+    question: "Quel matériau était utilisé pour les sculptures traditionnelles?",
+    options: ["Plastique", "Bois précieux et ébène", "Verre", "Aluminium"],
+    correctAnswer: 1,
+    explanation: "Les sculpteurs utilisaient des bois précieux comme l'ébène, choisis pour leur durabilité et leur valeur symbolique."
+  },
+  {
+    id: 8,
+    question: "Quelle caste était responsable de la poterie traditionnelle?",
+    options: ["Les guerriers", "Les laobé (potières)", "Les rois", "Les forgerons"],
+    correctAnswer: 1,
+    explanation: "Les laobé, caste de potières, étaient les spécialistes du modelage de l'argile et de la création de poteries."
+  },
+  {
+    id: 9,
+    question: "Que représentait le nombre de rangs de perles dans les parures royales?",
+    options: ["L'âge du porteur", "Le rang social et le pouvoir", "La richesse en bétail", "Le nombre d'enfants"],
+    correctAnswer: 1,
+    explanation: "Plus le nombre de rangs de perles était élevé, plus le rang social et le pouvoir du porteur étaient importants."
+  },
+  {
+    id: 10,
+    question: "Comment se transmettait le savoir artisanal dans la société wolof traditionnelle?",
+    options: ["Par des livres", "De génération en génération au sein des familles", "À l'école", "Par internet"],
+    correctAnswer: 1,
+    explanation: "Les savoirs artisanaux se transmettaient oralement de génération en génération, de maître à apprenti, au sein des familles d'artisans."
   }
 ];
 
@@ -157,7 +193,7 @@ export default function QuizPage() {
         <Quiz
           questions={culturalQuizQuestions}
           onComplete={handleQuizComplete}
-          title="Testez vos connaissances"
+          title="Quiz Culture Wolof"
         />
       ) : (
         <div className="max-w-2xl mx-auto">
