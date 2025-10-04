@@ -84,7 +84,7 @@ export const artworks: Artwork[] = [
       wo: 'Statue bu Fécondité yu Sérère',
     },
     description: {
-      fr: "Cette sculpture emblématique représente une mère portant son enfant. Elle symbolise la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospérité.",
+      fr: "Cette sculpture emblématique représente une mère portant son enfant. Elle symbolise la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospérité.",
       en: 'This iconic sculpture depicts a mother carrying her child. It symbolizes fertility, motherhood, and the continuity of life in Serer culture. The prominent breasts and rounded belly evoke abundance and prosperity.',
       wo: "Sculpture bii dafa wone beneen yaay buy dàq xale. Dafa mel ni fécondité, yaayam, ak continuité bu dund ci culture Sérère. Neen yi am ci kanam ak biir bu ronn dañuy wone yoom ak njariñ.",
     },
@@ -127,7 +127,7 @@ export const artworks: Artwork[] = [
       wo: 'Tapisserie Peul "Démeneer bu Nit ñi"',
     },
     description: {
-      fr: "Cette tapisserie colorée raconte l'histoire des migrations des Peuls à travers l'Afrique de l'Ouest. Tissée à la main avec des fibres naturelles teintes, elle illustre les troupeaux, les caravanes et les paysages traversés.",
+      fr: "Cette se la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospérité se la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospéritése la fertilité, la maternité et la continuité de la vie dans la culture Sérère. Les seins proéminents et le ventre rond évoquent l'abondance et la prospérité tapisserie colorée raconte l'histoire des migrations des Peuls à travers l'Afrique de l'Ouest. Tissée à la main avec des fibres naturelles teintes, elle illustre les troupeaux, les caravanes et les paysages traversés.",
       en: 'This colorful tapestry tells the story of Fulani migrations across West Africa. Hand-woven with dyed natural fibers, it illustrates herds, caravans, and landscapes traversed.',
       wo: "Tapisserie bii bu am melo dafa xalaat historia bu démeneeru Peul ci Afrique de l'Ouest. Dafa sedd ci loxo ak fibre yu nàtt bu des couleur, te dafa wone say nag, caravane ak paysage yu jël.",
     },
