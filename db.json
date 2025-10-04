@@ -1,0 +1,29 @@
+{
+  "oeuvres": [
+    {
+      "id": 1,
+      "titre": {
+        "fr": "Le masque royal",
+        "en": "The royal mask",
+        "wo": "Kàll bu buur"
+      },
+      "description": {
+        "fr": "Ce masque était utilisé...",
+        "en": "This mask was used...",
+        "wo": "Kàll bii dafa jëfandikoo..."
+      },
+      "audio": {
+        "fr": "audio/fr/masque.mp3",
+        "en": "audio/en/mask.mp3",
+        "wo": "audio/wo/kall.mp3"
+      },
+      "video": "video/masque.mp4",
+      "image": "images/masque.jpg",
+      "historique": {
+        "fr": "Origine du royaume...",
+        "en": "Origin of the kingdom...",
+        "wo": "Jëmmal bu buur..."
+      }
+    }
+  ]
+}
