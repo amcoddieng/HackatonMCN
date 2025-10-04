@@ -1,6 +1,7 @@
 // src/components/Header.tsx
 
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Globe, Sun, Moon, Menu, X, User } from 'lucide-react';
 import { useState } from 'react';
 import { changeLanguage, availableLanguages } from '../utils/i18n';
@@ -23,15 +24,15 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
   };
 
   const navLinks = [
-    { href: '/', label: 'Accueil' },
-    { href: '/catalogue', label: 'Catalogue' },
-    { href: '/scan', label: 'Scanner QR' },
-    { href: '/virtual-tour', label: 'Visite 360°' },
-    { href: '/account', label: 'Compte' },
+    { to: '/', label: 'Accueil' },
+    { to: '/catalogue', label: 'Catalogue' },
+    { to: '/scan', label: 'Scanner QR' },
+    { to: '/virtual-tour', label: 'Visite 360°' },
+    { to: '/account', label: 'Compte' },
   ];
 
   if (authUser?.isAdmin) {
-    navLinks.push({ href: '/admin', label: 'Admin' });
+    navLinks.push({ to: '/admin', label: 'Admin' });
   }
 
   return (
@@ -39,7 +40,7 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center space-x-3 flex-shrink-0">
+          <Link to="/" className="flex items-center space-x-3 flex-shrink-0">
             <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#D4AF37] flex items-center justify-center`}>
               <span className="text-xl sm:text-2xl font-bold text-[#D4AF37]">L</span>
             </div>
@@ -51,33 +52,33 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
                 MCN Digital Experience
               </p>
             </div>
-          </a>
+          </Link>
 
           {/* Navigation Desktop */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.to}
+                to={link.to}
                 className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37]' : 'text-gray-700 hover:text-[#D4AF37]'} transition-colors font-medium`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Actions Desktop */}
           <div className="hidden md:flex items-center space-x-4">
             {authUser && (
-              <a
-                href="/account"
+              <Link
+                to="/account"
                 className={`flex items-center space-x-2 px-3 py-2 ${darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'} rounded-lg transition-colors`}
               >
                 <User size={18} className="text-[#D4AF37]" />
                 <span className={`text-sm ${darkMode ? 'text-white' : 'text-black'}`}>
                   {authUser.name.split(' ')[0]}
                 </span>
-              </a>
+              </Link>
             )}
 
             {/* Sélecteur de langue */}
@@ -134,14 +135,14 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
           <nav className={`md:hidden ${darkMode ? 'border-gray-800' : 'border-gray-200'} border-t py-4`}>
             <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
+                <Link
+                  key={link.to}
+                  to={link.to}
                   className={`px-4 py-2 ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'} rounded-lg transition-colors ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
                   onClick={() => setShowMobileMenu(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               
               <div className="flex items-center justify-between px-4 py-2">
@@ -172,13 +173,13 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
               )}
 
               {!authUser && (
-                <a
-                  href="/account"
+                <Link
+                  to="/account"
                   className="px-4 py-2 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-yellow-500 transition-colors text-center"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Connexion
-                </a>
+                </Link>
               )}
             </div>
           </nav>

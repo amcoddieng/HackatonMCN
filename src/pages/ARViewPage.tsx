@@ -1,348 +1,277 @@
+// src/pages/ARViewPage.tsx
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Camera, X, Box, Info as InfoIcon, ArrowLeft, Smartphone } from 'lucide-react';
+import { useState } from 'react';
+import { Camera, X, Maximize2, RotateCw, ZoomIn, ArrowLeft, Info } from 'lucide-react';
+import { getArtworkById } from '../data/data';
 
 export const ARViewPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language as 'fr' | 'en' | 'wo') || 'fr';
+
   const [cameraActive, setCameraActive] = useState(false);
-  const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null);
-  const [showInstructions, setShowInstructions] = useState(true);
-  const [scanProgress, setScanProgress] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const artwork = getArtworkById(id || '');
 
-  // ID de l'œuvre (depuis l'URL ou mock)
-  const artworkId = id || '001';
-
-  useEffect(() => {
-    // Simuler l'activation de la caméra après un court délai
-    if (cameraActive && showInstructions) {
-      const interval = setInterval(() => {
-        setScanProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(interval);
-            setShowInstructions(false);
-            return 100;
-          }
-          return prev + 10;
-        });
-      }, 300);
-      return () => clearInterval(interval);
-    }
-  }, [cameraActive, showInstructions]);
-
-  const handleStartAR = () => {
-    setCameraActive(true);
-    setScanProgress(0);
-    // Dans un vrai cas, on demanderait l'accès à la caméra ici
-    // navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+  const activateCamera = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setCameraActive(true);
+      setIsLoading(false);
+    }, 1500);
   };
 
-  const handleStopAR = () => {
+  const stopCamera = () => {
     setCameraActive(false);
-    setShowInstructions(true);
-    setSelectedArtwork(null);
-    setScanProgress(0);
   };
 
-  const handleLoadModel = () => {
-    setSelectedArtwork(artworkId);
-  };
-
-  if (!cameraActive) {
+  if (!artwork) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white flex items-center justify-center p-6">
-        <div className="max-w-md w-full">
-          <div className="bg-gray-800 rounded-xl p-8 border border-yellow-600/30 text-center shadow-2xl">
-            <div className="w-20 h-20 bg-yellow-600/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-              <Camera className="text-yellow-600" size={40} />
-            </div>
-
-            <h1 className="text-3xl font-bold mb-4">
-              {t('arExperience') || 'Expérience AR'}
-            </h1>
-            <p className="text-gray-400 mb-2">
-              {t('ar.subtitle') || 'Visualisez les œuvres en 3D dans votre espace'}
-            </p>
-            <p className="text-sm text-yellow-600 font-semibold mb-8">
-              {t('ar.artworkId', { id: artworkId }) || `Œuvre #${artworkId}`}
-            </p>
-
-            {/* Aperçu de l'œuvre */}
-            <div className="bg-gray-900 rounded-lg p-4 mb-6">
-              <div className="aspect-square bg-gradient-to-br from-yellow-600/20 to-gray-800 rounded-lg flex items-center justify-center mb-3">
-                <Box className="text-yellow-600" size={64} />
-              </div>
-              <p className="text-xs text-gray-400">
-                Modèle 3D : <code className="text-yellow-600">{artworkId}.gltf</code>
-              </p>
-            </div>
-
-            <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4 mb-6">
-              <div className="flex items-start gap-3">
-                <InfoIcon className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                <div className="text-left">
-                  <p className="text-sm text-blue-200">
-                    <strong>{t('ar.mockMode') || 'Mode Démo'}:</strong> {t('ar.mockDescription') || 'Cette simulation montre comment la vraie AR fonctionnerait avec votre caméra.'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3 text-left mb-8">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 text-black font-bold text-sm">
-                  1
-                </div>
-                <p className="text-sm text-gray-300">
-                  {t('ar.step1') || 'Autorisez l\'accès à votre caméra'}
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 text-black font-bold text-sm">
-                  2
-                </div>
-                <p className="text-sm text-gray-300">
-                  {t('ar.step2') || 'Pointez vers une surface plane (table, sol)'}
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 text-black font-bold text-sm">
-                  3
-                </div>
-                <p className="text-sm text-gray-300">
-                  {t('ar.step3') || 'Manipulez l\'œuvre en 3D dans votre espace'}
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={handleStartAR}
-              className="w-full bg-yellow-600 text-black py-4 rounded-lg font-bold hover:bg-yellow-500 transition-colors flex items-center justify-center gap-2 shadow-lg"
-            >
-              <Camera size={20} />
-              {t('ar.activateCamera') || 'Activer la Caméra AR'}
-            </button>
-
-            <button
-              onClick={() => window.location.href = '/'}
-              className="w-full mt-3 bg-gray-700 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <ArrowLeft size={20} />
-              {t('back') || 'Retour'}
-            </button>
-          </div>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-400 text-xl mb-4">
+            {lang === 'fr' ? 'Œuvre non trouvée' :
+              lang === 'en' ? 'Artwork not found' :
+                'Liggéey gisul'}
+          </p>
+          <Link
+            to="/catalogue"
+            className="text-[#D4AF37] hover:text-yellow-300 font-semibold"
+          >
+            {lang === 'fr' ? '← Retour au catalogue' :
+              lang === 'en' ? '← Back to catalogue' :
+                '← Dellu ci catalogue'}
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Simulation du flux caméra avec vidéo */}
-      <div className="absolute inset-0">
-        {/* Vidéo de simulation (pièce/environnement) */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80"
-        >
-          <source src="https://storage.coverr.co/videos/HWwYn4KivPZk4A1M6VrPP5AnC3801fEDxW?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg3NjdFMzIzRjlGQzEzN0E4QTAyIiwiaWF0IjoxNjIyMDQ3MjY5fQ.0FYMb-DSTzFP9yBB3rJKdAJfvF2mQhgvvnpM7IJ9hW4" type="video/mp4" />
-        </video>
-        
-        {/* Overlay AR */}
-        <div className="absolute inset-0 bg-black/20" />
+    <div className="min-h-screen bg-black">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-black to-gray-900 border-b border-[#D4AF37]/30 py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+          <Link
+            to={`/oeuvre/${id}`}
+            className="inline-flex items-center space-x-2 text-gray-400 hover:text-[#D4AF37] transition-colors mb-4"
+          >
+            <ArrowLeft size={20} />
+            <span>
+              {lang === 'fr' ? 'Retour aux détails' :
+                lang === 'en' ? 'Back to details' :
+                  'Dellu ci détails'}
+            </span>
+          </Link>
+          <h1 className="text-3xl md:text-5xl font-bold text-[#D4AF37] mb-2">
+            {lang === 'fr' ? 'Réalité Augmentée' :
+              lang === 'en' ? 'Augmented Reality' :
+                'Réalité Augmentée'}
+          </h1>
+          <p className="text-gray-400 text-lg">
+            {artwork.title[lang]}
+          </p>
+        </div>
+      </div>
 
-        {/* Grille AR de détection */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <div className="relative">
-              {/* Cadre de détection AR */}
-              <div className="w-72 h-72 border-2 border-yellow-600/50 rounded-lg relative">
-                <div className="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-yellow-600 rounded-tl-lg" />
-                <div className="absolute top-0 right-0 w-12 h-12 border-t-4 border-r-4 border-yellow-600 rounded-tr-lg" />
-                <div className="absolute bottom-0 left-0 w-12 h-12 border-b-4 border-l-4 border-yellow-600 rounded-bl-lg" />
-                <div className="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-yellow-600 rounded-br-lg" />
+      {/* Viewer AR */}
+      <div className="relative w-full h-[70vh] bg-gradient-to-b from-gray-900 to-black">
+        {!cameraActive ? (
+          <div className="flex flex-col items-center justify-center h-full px-4">
+            <div className="w-32 h-32 rounded-full bg-[#D4AF37]/10 flex items-center justify-center mb-8 border-4 border-[#D4AF37]/30">
+              <Camera className="text-[#D4AF37]" size={64} />
+            </div>
 
-                {/* Point central de scan animé */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  {showInstructions ? (
-                    <>
-                      <div className="w-20 h-20 border-4 border-yellow-600 rounded-full animate-ping" />
-                      <div className="w-20 h-20 border-4 border-yellow-600 rounded-full absolute top-0 left-0 flex items-center justify-center">
-                        <Box className="text-yellow-600" size={40} />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="w-32 h-32 bg-yellow-600/10 backdrop-blur-sm rounded-lg border-2 border-yellow-600 flex items-center justify-center animate-bounce">
-                      <Box className="text-yellow-600" size={48} />
-                    </div>
-                  )}
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-center">
+              {lang === 'fr' ? 'Visualisez l\'œuvre en 3D' :
+                lang === 'en' ? 'Visualize the artwork in 3D' :
+                  'Xool liggéey bi ci 3D'}
+            </h2>
+
+            <p className="text-gray-400 text-center max-w-md mb-8">
+              {lang === 'fr' ? 'Activez votre caméra pour placer l\'œuvre dans votre environnement réel et l\'explorer sous tous les angles.' :
+                lang === 'en' ? 'Activate your camera to place the artwork in your real environment and explore it from all angles.' :
+                  'Active camera bi ngir des liggéey ci sa environnement te xool ci bëpp yoon.'}
+            </p>
+
+            <button
+              onClick={activateCamera}
+              disabled={isLoading}
+              className="flex items-center space-x-3 px-8 py-4 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-yellow-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Camera size={24} />
+              <span>
+                {isLoading
+                  ? (lang === 'fr' ? 'Activation...' :
+                    lang === 'en' ? 'Activating...' :
+                      'Dafa daw...')
+                  : (lang === 'fr' ? 'Activer la caméra' :
+                    lang === 'en' ? 'Activate camera' :
+                      'Active camera')}
+              </span>
+            </button>
+
+            {/* Informations techniques */}
+            <div className="mt-12 bg-gray-900/50 p-6 rounded-lg border border-[#D4AF37]/20 max-w-md">
+              <div className="flex items-start space-x-3 mb-4">
+                <Info className="text-[#D4AF37] flex-shrink-0" size={20} />
+                <div>
+                  <h3 className="text-[#D4AF37] font-semibold mb-2">
+                    {lang === 'fr' ? 'Modèle 3D' :
+                      lang === 'en' ? '3D Model' :
+                        'Modèle 3D'}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    <span className="text-white font-mono">{artwork.arModel}</span>
+                  </p>
+                  <p className="text-gray-500 text-xs mt-2">
+                    {lang === 'fr' ? 'Format : GLTF/GLB • Taille : ~5MB' :
+                      lang === 'en' ? 'Format: GLTF/GLB • Size: ~5MB' :
+                        'Format : GLTF/GLB • Taille : ~5MB'}
+                  </p>
                 </div>
-
-                {/* Barre de progression du scan */}
-                {showInstructions && scanProgress < 100 && (
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="bg-gray-900/80 backdrop-blur-sm rounded-full h-2 overflow-hidden">
-                      <div 
-                        className="bg-yellow-600 h-full transition-all duration-300"
-                        style={{ width: `${scanProgress}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
-
-            {showInstructions && (
-              <div className="bg-black/80 backdrop-blur-sm px-6 py-3 rounded-lg">
-                <p className="text-sm text-gray-300 mb-1">
-                  📱 {t('ar.scanning') || 'Scan de l\'environnement...'}
-                </p>
-                <p className="text-xs text-yellow-600">{scanProgress}%</p>
-              </div>
-            )}
           </div>
-        </div>
-      </div>
-
-      {/* Contrôles AR */}
-      <div className="absolute top-4 left-4 right-4 z-10 flex items-start justify-between">
-        <button
-          onClick={handleStopAR}
-          className="bg-red-600 p-3 rounded-full hover:bg-red-500 transition-colors shadow-lg"
-        >
-          <X size={24} />
-        </button>
-
-        <div className="bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2">
-          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <p className="text-sm text-gray-300">{t('ar.modeActive') || 'Mode AR Actif'}</p>
-        </div>
-      </div>
-
-      {/* Informations sur le modèle */}
-      <div className="absolute bottom-4 left-4 right-4 z-10">
-        <div className="bg-gray-900/95 backdrop-blur-md rounded-xl p-6 border border-yellow-600/30 shadow-2xl">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-yellow-600/20 rounded-lg flex items-center justify-center flex-shrink-0">
-              <Box className="text-yellow-600" size={24} />
+        ) : (
+          <div className="relative w-full h-full bg-black">
+            {/* Simulation de la caméra avec overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/60" />
+            {/* Grille AR */}
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(212, 175, 55, 0.3) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(212, 175, 55, 0.3) 1px, transparent 1px)
+                `,
+                backgroundSize: '50px 50px'
+              }}
+            />
+            {/* Cadre de détection */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-64 h-64 border-4 border-[#D4AF37] rounded-lg">
+                <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-[#D4AF37]"></div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-[#D4AF37]"></div>
+                <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-[#D4AF37]"></div>
+                <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-[#D4AF37]"></div>
+                {/* Modèle 3D simulé */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-pulse">
+                    <img
+                      src={artwork.imageUrl}
+                      alt={artwork.title[lang]}
+                      className="w-48 h-48 object-contain filter drop-shadow-2xl"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2">
-                {t('ar.model3D') || 'Modèle 3D'}
-              </h3>
-              <p className="text-sm text-gray-400 mb-3">
-                {selectedArtwork ? (
-                  <span className="text-green-400 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    ✓ {t('ar.modelLoaded', { id: artworkId }) || `${artworkId}.gltf chargé`}
-                  </span>
-                ) : (
-                  <span className="text-yellow-400">
-                    {t('ar.modelPending', { id: artworkId }) || `${artworkId}.gltf prêt`}
-                  </span>
-                )}
+            {/* Informations overlay */}
+            <div className="absolute top-6 left-6 right-6">
+              <div className="bg-black/80 px-4 py-3 rounded-lg border border-[#D4AF37]/30 backdrop-blur-sm">
+                <p className="text-[#D4AF37] font-semibold mb-1">
+                  {artwork.title[lang]}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {lang === 'fr' ? '📐 Chargement du modèle 3D :' :
+                    lang === 'en' ? '📐 Loading 3D model:' :
+                      '📐 Chargement modèle 3D :'} <span className="text-white font-mono">{artwork.arModel}</span>
+                </p>
+              </div>
+            </div>
+            {/* Contrôles AR */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/80 px-6 py-3 rounded-full border border-[#D4AF37]/30 backdrop-blur-sm">
+              <button className="text-gray-300 hover:text-[#D4AF37] transition-colors" aria-label="Rotate">
+                <RotateCw size={24} />
+              </button>
+              <button className="text-gray-300 hover:text-[#D4AF37] transition-colors" aria-label="Zoom">
+                <ZoomIn size={24} />
+              </button>
+              <button className="text-gray-300 hover:text-[#D4AF37] transition-colors" aria-label="Maximize">
+                <Maximize2 size={24} />
+              </button>
+              <div className="w-px h-6 bg-gray-700"></div>
+              <button
+                onClick={stopCamera}
+                className="text-red-400 hover:text-red-300 transition-colors"
+                aria-label="Close"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            {/* Instructions */}
+            <div className="absolute top-1/2 left-6 transform -translate-y-1/2 bg-black/80 px-4 py-3 rounded-lg border border-[#D4AF37]/30 backdrop-blur-sm max-w-xs">
+              <p className="text-gray-300 text-sm mb-2">
+                {lang === 'fr' ? '💡 Instructions :' :
+                  lang === 'en' ? '💡 Instructions:' :
+                    '💡 Instructions :'}
               </p>
+              <ul className="text-gray-400 text-xs space-y-1">
+                <li>• {lang === 'fr' ? 'Pointez vers une surface plane' : lang === 'en' ? 'Point at a flat surface' : 'Point ci surface plane'}</li>
+                <li>• {lang === 'fr' ? 'Touchez pour placer' : lang === 'en' ? 'Tap to place' : 'Touch ngir des'}</li>
+                <li>• {lang === 'fr' ? 'Pincez pour zoomer' : lang === 'en' ? 'Pinch to zoom' : 'Pinch ngir zoom'}</li>
+                <li>• {lang === 'fr' ? 'Glissez pour tourner' : lang === 'en' ? 'Swipe to rotate' : 'Swipe ngir tourner'}</li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
 
-              <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-3 mb-4">
-                <p className="text-xs text-blue-200 flex items-start gap-2">
-                  <Smartphone className="flex-shrink-0 mt-0.5" size={14} />
-                  <span>
-                    <strong>{t('ar.mockMode') || 'Démo'}:</strong> {t('ar.techNote', { id: artworkId }) || `En production, ${artworkId}.gltf serait affiché en AR via WebXR ou AR.js`}
-                  </span>
-                </p>
-              </div>
-
-              {!selectedArtwork && !showInstructions && (
-                <button
-                  onClick={handleLoadModel}
-                  className="w-full bg-yellow-600 text-black py-3 rounded-lg font-bold hover:bg-yellow-500 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Box size={20} />
-                  {t('ar.loadModel') || 'Placer l\'objet 3D'}
-                </button>
-              )}
-
-              {selectedArtwork && (
-                <div className="space-y-2">
-                  <div className="bg-gray-800 rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-semibold text-yellow-600">
-                        {t('ar.interactions') || 'Interactions:'}
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs">
-                      <div className="bg-gray-700 px-2 py-2 rounded text-center">
-                        👆 {t('ar.move') || 'Déplacer'}
-                      </div>
-                      <div className="bg-gray-700 px-2 py-2 rounded text-center">
-                        🔄 {t('ar.rotate') || 'Rotation'}
-                      </div>
-                      <div className="bg-gray-700 px-2 py-2 rounded text-center">
-                        📏 {t('ar.resize') || 'Taille'}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Statistiques de l'objet 3D */}
-                  <div className="bg-gray-800 rounded-lg p-3">
-                    <div className="grid grid-cols-2 gap-3 text-xs">
-                      <div>
-                        <p className="text-gray-400">Polygones</p>
-                        <p className="text-white font-semibold">12,450</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-400">Taille</p>
-                        <p className="text-white font-semibold">2.3 MB</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+      {/* Informations complémentaires */}
+      <div className="bg-black py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Compatibilité */}
+            <div className="bg-gray-900 p-6 rounded-lg border border-[#D4AF37]/20">
+              <h3 className="text-[#D4AF37] font-semibold mb-3">
+                {lang === 'fr' ? 'Compatibilité' :
+                  lang === 'en' ? 'Compatibility' :
+                    'Compatibilité'}
+              </h3>
+              <ul className="text-gray-400 text-sm space-y-2">
+                <li>✅ iOS 12+ (ARKit)</li>
+                <li>✅ Android 7+ (ARCore)</li>
+                <li>✅ {lang === 'fr' ? 'Navigateurs WebXR' : lang === 'en' ? 'WebXR browsers' : 'Navigateur WebXR'}</li>
+              </ul>
+            </div>
+            {/* Fonctionnalités */}
+            <div className="bg-gray-900 p-6 rounded-lg border border-[#D4AF37]/20">
+              <h3 className="text-[#D4AF37] font-semibold mb-3">
+                {lang === 'fr' ? 'Fonctionnalités' :
+                  lang === 'en' ? 'Features' :
+                    'Fonctionnalités'}
+              </h3>
+              <ul className="text-gray-400 text-sm space-y-2">
+                <li>🔄 {lang === 'fr' ? 'Rotation 360°' : lang === 'en' ? '360° Rotation' : 'Rotation 360°'}</li>
+                <li>📏 {lang === 'fr' ? 'Échelle réaliste' : lang === 'en' ? 'Realistic scale' : 'Échelle réaliste'}</li>
+                <li>💡 {lang === 'fr' ? 'Éclairage dynamique' : lang === 'en' ? 'Dynamic lighting' : 'Éclairage dynamique'}</li>
+              </ul>
+            </div>
+            {/* Aide */}
+            <div className="bg-gray-900 p-6 rounded-lg border border-[#D4AF37]/20">
+              <h3 className="text-[#D4AF37] font-semibold mb-3">
+                {lang === 'fr' ? 'Besoin d\'aide ?' :
+                  lang === 'en' ? 'Need help?' :
+                    'Soxla ?'}
+              </h3>
+              <p className="text-gray-400 text-sm mb-3">
+                {lang === 'fr' ? 'Contactez notre équipe si vous rencontrez des difficultés.' :
+                  lang === 'en' ? 'Contact our team if you encounter difficulties.' :
+                    'Jokkoo ak équipe bi bu am problème.'}
+              </p>
+              <a
+                href="mailto:support@mcn.sn"
+                className="text-[#D4AF37] hover:text-yellow-300 text-sm font-semibold"
+              >
+                support@mcn.sn →
+              </a>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Instructions flottantes après détection */}
-      {!showInstructions && !selectedArtwork && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center animate-bounce">
-          <div className="bg-black/80 backdrop-blur-sm px-6 py-4 rounded-lg border border-yellow-600/50 shadow-2xl">
-            <p className="text-sm text-gray-300 mb-2 flex items-center justify-center gap-2">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              {t('ar.surfaceDetected') || 'Surface détectée'} ✓
-            </p>
-            <p className="text-xs text-yellow-600">
-              {t('ar.tapToPlace') || 'Tapez en bas pour placer l\'objet'}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Indicateur de distance/échelle (quand objet placé) */}
-      {selectedArtwork && (
-        <div className="absolute top-1/4 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-3 border border-yellow-600/30">
-          <div className="text-xs space-y-2">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-gray-400">Distance:</span>
-              <span className="text-yellow-600 font-semibold">1.2m</span>
-            </div>
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-gray-400">Échelle:</span>
-              <span className="text-yellow-600 font-semibold">100%</span>
-            </div>
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-gray-400">Éclairage:</span>
-              <span className="text-green-400 font-semibold">Optimal</span>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
