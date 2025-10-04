@@ -134,14 +134,14 @@ export const ArtworkDetail = () => {
             </div>
 
             {/* Vidéo */}
-            {artwork.videoUrl && (
+            {/* {artwork.videoUrl && (
               <div className="mt-4">
                 <video controls className="w-full rounded-lg">
                   <source src={artwork.videoUrl} type="video/mp4" />
                   {t('videoNotSupported', 'Votre navigateur ne supporte pas la lecture vidéo')}
                 </video>
               </div>
-            )}
+            )} */}
           </div>
     </div>
   );
