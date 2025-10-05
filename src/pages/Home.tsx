@@ -4,14 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { QrCode, BookOpen, Globe, MessageCircle, Award, Calendar, Users } from 'lucide-react';
 import { getUserProgress } from '../utils/localStorageHelpers';
+import { useTheme } from '../contexts/ThemeContext';
 
 export const Home = () => {
   const { t, i18n } = useTranslation();
+  const { darkMode } = useTheme();
   const progress = getUserProgress();
   const lang = i18n.language as 'fr' | 'en' | 'wo';
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className={`min-h-screen ${darkMode ? 'bg-black' : 'bg-gray-50'}`}>
       {/* Hero Section */}
       <div className="relative min-h-[80vh] flex items-center">
         {/* Background Image */}
@@ -21,18 +23,18 @@ export const Home = () => {
             backgroundImage: 'url(https://images.pexels.com/photos/6069861/pexels-photo-6069861.jpeg)',
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent"></div>
+          <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-r from-black via-black/90 to-transparent' : 'bg-gradient-to-r from-white via-white/85 to-white/70'}`}></div>
         </div>
 
         {/* Content */}
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-[#D4AF37] mb-6 leading-tight">
+            <h1 className={`text-4xl sm:text-5xl md:text-7xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-black'} mb-6 leading-tight`}>
               {lang === 'fr' ? 'Explorez le Musée des Civilisations Noires' : 
                lang === 'en' ? 'Explore the Museum of Black Civilizations' :
                'Xool Musée des Civilisations Noires'}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+            <p className={`text-lg sm:text-xl md:text-2xl ${darkMode ? 'text-gray-300' : 'text-gray-800'} mb-8 leading-relaxed`}>
               {lang === 'fr' ? 'avec réalité augmentée, guides multilingues et expériences interactives' :
                lang === 'en' ? 'with augmented reality, multilingual guides and interactive experiences' :
                'ak réalité augmentée, guide multilingue ak expérience interactive'}
@@ -65,22 +67,22 @@ export const Home = () => {
       </div>
 
       {/* Section des fonctionnalités principales */}
-      <div className="bg-black py-20">
+      <div className={`${darkMode ? 'bg-black' : 'bg-white'} py-20`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {/* Visite Virtuelle */}
-            <div className="group bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all transform hover:-translate-y-1">
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <Globe className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#D4AF37] mb-3">
+                  <h3 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-3`}>
                     {lang === 'fr' ? 'Visite Virtuelle 360°' :
                      lang === 'en' ? 'Virtual Tour 360°' :
                      'Visite Virtuelle 360°'}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-4">
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
                     {lang === 'fr' ? "Explorez le musée depuis n'importe où dans le monde avec notre visite virtuelle immersive." :
                      lang === 'en' ? 'Explore the museum from anywhere in the world with our immersive virtual tour.' :
                      'Xool musée ci kuy nekk ci àdduna bi ak visite virtuelle immersive.'}
@@ -93,16 +95,16 @@ export const Home = () => {
             </div>
 
             {/* Guide IA */}
-            <div className="group bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all transform hover:-translate-y-1">
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <MessageCircle className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#D4AF37] mb-3">
+                  <h3 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-3`}>
                     Guide IA - Lumina
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-4">
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
                     {lang === 'fr' ? "Posez vos questions à Lumina, notre guide IA, et découvrez l'histoire fascinante de chaque œuvre." :
                      lang === 'en' ? 'Ask Lumina, our AI guide, and discover the fascinating history of each artwork.' :
                      'Laaj Lumina, guide IA, te gis historia bu nekk ci bëpp liggéey.'}
@@ -115,19 +117,19 @@ export const Home = () => {
             </div>
 
             {/* Progression */}
-            <div className="group bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all transform hover:-translate-y-1">
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <Award className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#D4AF37] mb-3">
+                  <h3 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-3`}>
                     Progression & Badges
                   </h3>
-                  <p className="text-gray-400 leading-relaxed mb-2">
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-2`}>
                     Score: {progress.score}
                   </p>
-                  <p className="text-gray-400 leading-relaxed mb-4">
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
                     Badges: {progress.badges.length}
                   </p>
                   <Link to="/account" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
@@ -141,20 +143,20 @@ export const Home = () => {
       </div>
 
       {/* Section Planification et Contribution */}
-      <div className="bg-gradient-to-b from-black to-gray-900 py-16">
+      <div className={`${darkMode ? 'bg-gradient-to-b from-black to-gray-900' : 'bg-gradient-to-b from-white to-gray-100'} py-16`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Planifier une visite */}
-            <div className="bg-gradient-to-br from-[#D4AF37]/10 to-[#D4AF37]/5 p-8 rounded-lg border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all">
+            <div className={`${darkMode ? 'bg-gradient-to-br from-[#D4AF37]/10 to-[#D4AF37]/5 border-[#D4AF37]/30' : 'bg-gradient-to-br from-yellow-50 to-white border-yellow-200'} p-8 rounded-lg border hover:border-[#D4AF37] transition-all`}>
               <div className="flex items-center space-x-4 mb-4">
                 <Calendar className="text-[#D4AF37]" size={32} />
-                <h3 className="text-2xl font-bold text-[#D4AF37]">
+                <h3 className={`text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'}`}>
                   {lang === 'fr' ? 'Planifier une Visite' :
                    lang === 'en' ? 'Plan a Visit' :
                    'Planifier Visite'}
                 </h3>
               </div>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} mb-6 leading-relaxed`}>
                 {lang === 'fr' ? 'Réservez votre visite guidée et profitez d\'une expérience personnalisée au Musée des Civilisations Noires.' :
                  lang === 'en' ? 'Book your guided tour and enjoy a personalized experience at the Museum of Black Civilizations.' :
                  'Réserver visite guidée bi te am expérience personnalisée ci MCN.'}
@@ -168,16 +170,16 @@ export const Home = () => {
             </div>
 
             {/* Contribuer */}
-            <div className="bg-gradient-to-br from-[#D4AF37]/10 to-[#D4AF37]/5 p-8 rounded-lg border border-[#D4AF37]/30 hover:border-[#D4AF37] transition-all">
+            <div className={`${darkMode ? 'bg-gradient-to-br from-[#D4AF37]/10 to-[#D4AF37]/5 border-[#D4AF37]/30' : 'bg-gradient-to-br from-yellow-50 to-white border-yellow-200'} p-8 rounded-lg border hover:border-[#D4AF37] transition-all`}>
               <div className="flex items-center space-x-4 mb-4">
                 <Users className="text-[#D4AF37]" size={32} />
-                <h3 className="text-2xl font-bold text-[#D4AF37]">
+                <h3 className={`text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'}`}>
                   {lang === 'fr' ? 'Contribuer' :
                    lang === 'en' ? 'Contribute' :
                    'Jox sa Batal'}
                 </h3>
               </div>
-              <p className="text-gray-400 mb-6 leading-relaxed">
+              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} mb-6 leading-relaxed`}>
                 {lang === 'fr' ? 'Partagez votre témoignage, vos souvenirs ou vos connaissances sur les œuvres de notre collection.' :
                  lang === 'en' ? 'Share your testimony, memories or knowledge about the works in our collection.' :
                  'Jox sa témoignage, sa xeeti wala sa xam-xam ci liggéey yi.'}

@@ -3,9 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BrowserQRCodeReader } from '@zxing/library';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 
 export const Scan = () => {
   const { t } = useTranslation();
+  const { darkMode } = useTheme();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ export const Scan = () => {
           if (!active) return;
 
           if (result) {
-            // QR code détecté, on navigue vers la page de l'œuvre
             navigate(`/oeuvre/${result.getText()}`);
             active = false;
             codeReader.reset();
@@ -40,10 +41,10 @@ export const Scan = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-gray-50 text-black'} flex items-center justify-center`}>
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-yellow-400 mb-4">{t('scanArtwork', 'Scanner l’œuvre')}</h1>
-        <p className="text-gray-400 mb-8">{t('scanInstructions', 'Dirigez votre caméra vers le QR code')}</p>
+        <h1 className={`text-4xl font-bold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-4`}>{t('scanArtwork', { defaultValue: "Scanner l'œuvre" })}</h1>
+        <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-8`}>{t('scanInstructions', { defaultValue: "Dirigez votre caméra vers le QR code" })}</p>
 
         <div className="mt-8 w-64 h-64 border-4 border-yellow-600 rounded-lg mx-auto overflow-hidden">
           <video ref={videoRef} className="w-full h-full object-cover" autoPlay playsInline />

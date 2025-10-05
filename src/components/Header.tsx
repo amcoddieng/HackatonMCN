@@ -6,14 +6,11 @@ import { Globe, Sun, Moon, Menu, X, User } from 'lucide-react';
 import { useState } from 'react';
 import { changeLanguage, availableLanguages } from '../utils/i18n';
 import { getAuthUser } from '../utils/localStorageHelpers';
+import { useTheme } from '../contexts/ThemeContext';
 
-interface HeaderProps {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-}
-
-export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
+export const Header = () => {
   const { t, i18n } = useTranslation();
+  const { darkMode, toggleDarkMode } = useTheme();
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const authUser = getAuthUser();
@@ -36,16 +33,16 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
   }
 
   return (
-    <header className={`${darkMode ? 'bg-black' : 'bg-white'} border-b ${darkMode ? 'border-gray-900' : 'border-gray-200'} sticky top-0 z-50 transition-colors duration-300`}>
+    <header className={`${darkMode ? 'bg-black border-gray-900' : 'bg-white border-gray-200'} border-b sticky top-0 z-50 transition-colors duration-300`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 flex-shrink-0">
-            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#D4AF37] flex items-center justify-center`}>
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-[#D4AF37] flex items-center justify-center">
               <span className="text-xl sm:text-2xl font-bold text-[#D4AF37]">L</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className={`text-lg sm:text-xl font-bold text-[#D4AF37] tracking-wide`}>
+              <h1 className="text-lg sm:text-xl font-bold text-[#D4AF37] tracking-wide">
                 Light Of Africa
               </h1>
               <p className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-600'} uppercase tracking-widest`}>
@@ -109,15 +106,13 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
             </div>
 
             {/* Toggle Dark/Light Mode */}
-            {toggleDarkMode && (
-              <button
-                onClick={toggleDarkMode}
-                className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37]' : 'text-gray-700 hover:text-[#D4AF37]'} transition-colors`}
-                aria-label={darkMode ? 'Mode clair' : 'Mode sombre'}
-              >
-                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-            )}
+            <button
+              onClick={toggleDarkMode}
+              className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37]' : 'text-gray-700 hover:text-[#D4AF37]'} transition-colors`}
+              aria-label={darkMode ? 'Mode clair' : 'Mode sombre'}
+            >
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
           </div>
 
           {/* Menu Mobile Button */}
@@ -150,7 +145,7 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
                 <select
                   value={i18n.language}
                   onChange={(e) => handleLanguageChange(e.target.value as 'fr' | 'en' | 'wo')}
-                  className={`px-3 py-1 rounded ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'} border ${darkMode ? 'border-gray-700' : 'border-gray-300'}`}
+                  className={`px-3 py-1 rounded ${darkMode ? 'bg-gray-800 text-white border-gray-700' : 'bg-gray-100 text-black border-gray-300'} border`}
                 >
                   {availableLanguages.map((lang) => (
                     <option key={lang.code} value={lang.code}>
@@ -160,17 +155,15 @@ export const Header = ({ darkMode = true, toggleDarkMode }: HeaderProps) => {
                 </select>
               </div>
 
-              {toggleDarkMode && (
-                <button
-                  onClick={toggleDarkMode}
-                  className={`flex items-center justify-between px-4 py-2 ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
-                >
-                  <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    {darkMode ? 'Mode clair' : 'Mode sombre'}
-                  </span>
-                  {darkMode ? <Sun size={20} className="text-[#D4AF37]" /> : <Moon size={20} className="text-[#D4AF37]" />}
-                </button>
-              )}
+              <button
+                onClick={toggleDarkMode}
+                className={`flex items-center justify-between px-4 py-2 ${darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100'} rounded-lg transition-colors`}
+              >
+                <span className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  {darkMode ? 'Mode clair' : 'Mode sombre'}
+                </span>
+                {darkMode ? <Sun size={20} className="text-[#D4AF37]" /> : <Moon size={20} className="text-[#D4AF37]" />}
+              </button>
 
               {!authUser && (
                 <Link
