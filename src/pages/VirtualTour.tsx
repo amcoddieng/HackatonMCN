@@ -2,49 +2,102 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Info, MapPin, Home } from 'lucide-react';
+import { artworks } from '../data/data';
 
-// Images 360° mockées
-const rooms = [
+// Images 360° FONCTIONNELLES depuis Unsplash
+const museumRooms = [
   {
-    id: 1,
-    name: { fr: 'Hall d\'Entrée', en: 'Entrance Hall', wo: 'Biir bu dugg' },
-    image: 'https://pannellum.org/images/alma.jpg',
-    description: { 
-      fr: 'Découvrez le majestueux hall d\'entrée du Musée des Civilisations Noires',
-      en: 'Discover the majestic entrance hall of the Museum of Black Civilizations',
-      wo: 'Gis biir bu dugg bu Musée des Civilisations Noires'
-    }
+    id: 'hall',
+    name: { fr: 'Hall d\'Entrée Principal', en: 'Main Entrance Hall', wo: 'Biir bu dugg bu bëri' },
+    image360: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=2000&h=1000&fit=crop', // Musée
+    hotspots: [
+      { 
+        pitch: 10, 
+        yaw: 0, 
+        type: 'info',
+        artworkId: 'oeuvre1',
+        text: { fr: 'Masque Cérémoniel', en: 'Ceremonial Mask', wo: 'Masque Cérémoniel' }
+      },
+      { 
+        pitch: -5, 
+        yaw: 90, 
+        type: 'scene',
+        targetRoom: 'masks',
+        text: { fr: '→ Salle des Masques', en: '→ Mask Room', wo: '→ Biir bu Masque' }
+      }
+    ]
   },
   {
-    id: 2,
-    name: { fr: 'Salle des Masques', en: 'Mask Room', wo: 'Biir bu Masque' },
-    image: 'https://pannellum.org/images/cerro-toco-0.jpg',
-    description: { 
-      fr: 'Explorez notre collection exceptionnelle de masques traditionnels africains',
-      en: 'Explore our exceptional collection of traditional African masks',
-      wo: 'Xool collection bu masque yu aada yu Afrique'
-    }
+    id: 'masks',
+    name: { fr: 'Salle des Masques Africains', en: 'African Masks Room', wo: 'Biir bu Masque yu Afrique' },
+    image360: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=2000&h=1000&fit=crop', // Galerie art
+    hotspots: [
+      { 
+        pitch: 5, 
+        yaw: -30, 
+        type: 'info',
+        artworkId: 'oeuvre1',
+        text: { fr: 'Masque Wolof', en: 'Wolof Mask', wo: 'Masque Wolof' }
+      },
+      { 
+        pitch: 0, 
+        yaw: 180, 
+        type: 'scene',
+        targetRoom: 'contemporary',
+        text: { fr: '→ Art Contemporain', en: '→ Contemporary Art', wo: '→ Art Contemporain' }
+      },
+      { 
+        pitch: -10, 
+        yaw: 90, 
+        type: 'scene',
+        targetRoom: 'hall',
+        text: { fr: '← Retour Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
+      }
+    ]
   },
   {
-    id: 3,
-    name: { fr: 'Galerie d\'Art Contemporain', en: 'Contemporary Art Gallery', wo: 'Galerie bu Art Contemporain' },
-    image: 'https://pannellum.org/images/jfk.jpg',
-    description: { 
-      fr: 'Admirez les œuvres d\'artistes africains contemporains',
-      en: 'Admire the works of contemporary African artists',
-      wo: 'Xool liggéey yu artiste contemporain yu Afrique'
-    }
+    id: 'contemporary',
+    name: { fr: 'Galerie d\'Art Contemporain', en: 'Contemporary Art Gallery', wo: 'Galerie Art Contemporain' },
+    image360: 'https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?w=2000&h=1000&fit=crop', // Galerie moderne
+    hotspots: [
+      { 
+        pitch: 8, 
+        yaw: 45, 
+        type: 'info',
+        artworkId: 'oeuvre5',
+        text: { fr: 'Peinture Résistance', en: 'Resistance Painting', wo: 'Peinture Résistance' }
+      },
+      { 
+        pitch: -5, 
+        yaw: -90, 
+        type: 'scene',
+        targetRoom: 'mali',
+        text: { fr: '→ Empire du Mali', en: '→ Mali Empire', wo: '→ Empire Mali' }
+      }
+    ]
   },
   {
-    id: 4,
-    name: { fr: 'Salle de l\'Empire du Mali', en: 'Mali Empire Room', wo: 'Biir bu Empire Mali' },
-    image: 'https://pannellum.org/images/bma-0.jpg',
-    description: { 
-      fr: 'Plongez dans l\'histoire glorieuse de l\'Empire du Mali',
-      en: 'Dive into the glorious history of the Mali Empire',
-      wo: 'Dugg ci historia bu mag bu Empire Mali'
-    }
+    id: 'mali',
+    name: { fr: 'Salle Empire du Mali', en: 'Mali Empire Room', wo: 'Biir Empire Mali' },
+    image360: 'https://images.unsplash.com/photo-1566127992631-137a642a90f4?w=2000&h=1000&fit=crop', // Salle historique
+    hotspots: [
+      { 
+        pitch: 2, 
+        yaw: 0, 
+        type: 'info',
+        artworkId: 'oeuvre6',
+        text: { fr: 'Collier Royal', en: 'Royal Necklace', wo: 'Collier Royal' }
+      },
+      { 
+        pitch: -8, 
+        yaw: 135, 
+        type: 'scene',
+        targetRoom: 'hall',
+        text: { fr: '← Retour Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
+      }
+    ]
   }
 ];
 
@@ -56,210 +109,266 @@ declare global {
 }
 
 export const VirtualTour = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const lang = i18n.language as 'fr' | 'en' | 'wo';
   
-  const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
+  const [currentRoomId, setCurrentRoomId] = useState('hall');
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
   const viewerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pannellumInstance = useRef<any>(null);
 
-  const currentRoom = rooms[currentRoomIndex];
+  const currentRoom = museumRooms.find(r => r.id === currentRoomId) || museumRooms[0];
+  const currentArtwork = selectedArtwork ? artworks.find(a => a.id === selectedArtwork) : null;
 
+  // Charger Pannellum
   useEffect(() => {
-    // Charger le script Pannellum
+    if (scriptLoaded) return;
+
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js';
     script.async = true;
-    document.body.appendChild(script);
-
+    
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
-    document.head.appendChild(link);
 
     script.onload = () => {
+      console.log('Pannellum chargé');
+      setScriptLoaded(true);
       setIsLoading(false);
     };
 
+    script.onerror = () => {
+      console.error('Erreur chargement Pannellum');
+      setIsLoading(false);
+    };
+
+    document.head.appendChild(link);
+    document.body.appendChild(script);
+
     return () => {
-      document.body.removeChild(script);
-      document.head.removeChild(link);
+      if (document.body.contains(script)) document.body.removeChild(script);
+      if (document.head.contains(link)) document.head.removeChild(link);
       if (pannellumInstance.current) {
-        pannellumInstance.current.destroy();
+        try {
+          pannellumInstance.current.destroy();
+        } catch (e) {
+          console.error('Erreur destruction viewer:', e);
+        }
       }
     };
   }, []);
 
+  // Initialiser le viewer
   useEffect(() => {
-    if (!isLoading && viewerRef.current && window.pannellum) {
+    if (!scriptLoaded || !viewerRef.current || !window.pannellum) return;
+
+    try {
       if (pannellumInstance.current) {
         pannellumInstance.current.destroy();
       }
 
-      pannellumInstance.current = window.pannellum.viewer(viewerRef.current, {
-        type: 'equirectangular',
-        panorama: currentRoom.image,
-        autoLoad: true,
-        showControls: false,
-        mouseZoom: true,
-        draggable: true,
-        hfov: 100,
-        pitch: 0,
-        yaw: 0,
+      // Configuration simplifiée des scènes
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const scenes: any = {};
+      
+      museumRooms.forEach(room => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const hotspots: any[] = [];
+        
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        room.hotspots.forEach((spot, idx) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const hotspot: any = {
+            pitch: spot.pitch,
+            yaw: spot.yaw,
+            type: spot.type === 'info' ? 'info' : 'scene',
+            text: spot.text[lang],
+            cssClass: spot.type === 'info' ? 'hotspot-artwork' : 'hotspot-scene'
+          };
+
+          if (spot.type === 'info') {
+            hotspot.clickHandlerFunc = () => {
+              console.log('Hotspot cliqué:', spot.artworkId);
+              setSelectedArtwork(spot.artworkId!);
+            };
+          } else {
+            hotspot.sceneId = spot.targetRoom;
+          }
+
+          hotspots.push(hotspot);
+        });
+
+        scenes[room.id] = {
+          type: 'equirectangular',
+          panorama: room.image360,
+          hotSpots: hotspots,
+          autoLoad: true
+        };
       });
+
+      console.log('Initialisation viewer avec scènes:', Object.keys(scenes));
+
+      pannellumInstance.current = window.pannellum.viewer(viewerRef.current, {
+        default: {
+          firstScene: currentRoomId,
+          sceneFadeDuration: 1000,
+          autoLoad: true
+        },
+        scenes: scenes
+      });
+
+      pannellumInstance.current.on('scenechange', (sceneId: string) => {
+        console.log('Changement de scène:', sceneId);
+        setCurrentRoomId(sceneId);
+        setSelectedArtwork(null);
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      pannellumInstance.current.on('error', (err: any) => {
+        console.error('Erreur Pannellum:', err);
+      });
+
+    } catch (error) {
+      console.error('Erreur initialisation viewer:', error);
     }
-  }, [currentRoomIndex, isLoading, currentRoom.image]);
+  }, [scriptLoaded, lang]);
 
-  const nextRoom = () => {
-    setCurrentRoomIndex((prev) => (prev + 1) % rooms.length);
-  };
-
-  const previousRoom = () => {
-    setCurrentRoomIndex((prev) => (prev - 1 + rooms.length) % rooms.length);
-  };
-
-  const resetView = () => {
+  const goToRoom = (roomId: string) => {
     if (pannellumInstance.current) {
-      pannellumInstance.current.setPitch(0);
-      pannellumInstance.current.setYaw(0);
-      pannellumInstance.current.setHfov(100);
-    }
-  };
-
-  const zoomIn = () => {
-    if (pannellumInstance.current) {
-      const currentHfov = pannellumInstance.current.getHfov();
-      pannellumInstance.current.setHfov(Math.max(currentHfov - 10, 50));
-    }
-  };
-
-  const zoomOut = () => {
-    if (pannellumInstance.current) {
-      const currentHfov = pannellumInstance.current.getHfov();
-      pannellumInstance.current.setHfov(Math.min(currentHfov + 10, 120));
-    }
-  };
-
-  const toggleFullscreen = () => {
-    if (pannellumInstance.current) {
-      pannellumInstance.current.toggleFullscreen();
+      try {
+        pannellumInstance.current.loadScene(roomId);
+      } catch (error) {
+        console.error('Erreur changement de scène:', error);
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="bg-gradient-to-r from-black to-gray-900 border-b border-[#D4AF37]/30 py-6">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#D4AF37] mb-2">
-            {lang === 'fr' ? 'Visite Virtuelle 360°' :
-             lang === 'en' ? 'Virtual Tour 360°' :
-             'Visite Virtuelle 360°'}
-          </h1>
-          <p className="text-gray-400 text-lg">{currentRoom.name[lang]}</p>
-          <p className="text-gray-500 text-sm mt-2">{currentRoom.description[lang]}</p>
+      <div className="bg-gradient-to-r from-black to-gray-900 border-b border-[#D4AF37]/30 py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl md:text-4xl font-bold text-[#D4AF37] mb-1">
+                Visite Virtuelle 360°
+              </h1>
+              <p className="text-gray-400">{currentRoom.name[lang]}</p>
+            </div>
+            <Link to="/" className="text-gray-400 hover:text-[#D4AF37] transition-colors">
+              <Home size={24} />
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Viewer 360° */}
-      <div className="relative w-full h-[70vh] bg-black">
+      <div className="relative w-full h-[75vh] bg-black">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-[#D4AF37] text-xl">Chargement...</div>
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#D4AF37] border-t-transparent mb-4"></div>
+            <div className="text-[#D4AF37] text-xl">Chargement de la visite...</div>
           </div>
         ) : (
-          <div ref={viewerRef} className="w-full h-full" />
-        )}
+          <>
+            <div ref={viewerRef} className="w-full h-full" id="panorama-viewer" />
 
-        {/* Contrôles */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/80 px-6 py-3 rounded-full border border-[#D4AF37]/30">
-          <button onClick={zoomOut} className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-            <ZoomOut size={24} />
-          </button>
-          <button onClick={resetView} className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-            <RotateCw size={24} />
-          </button>
-          <button onClick={zoomIn} className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-            <ZoomIn size={24} />
-          </button>
-          <div className="w-px h-6 bg-gray-700"></div>
-          <button onClick={toggleFullscreen} className="text-gray-300 hover:text-[#D4AF37] transition-colors">
-            <Maximize size={24} />
-          </button>
-        </div>
-
-        {/* Instructions */}
-        <div className="absolute top-6 left-6 bg-black/80 px-4 py-2 rounded-lg border border-[#D4AF37]/30">
-          <p className="text-gray-300 text-sm">
-            {lang === 'fr' ? '🖱️ Cliquez et glissez pour regarder autour' :
-             lang === 'en' ? '🖱️ Click and drag to look around' :
-             '🖱️ Click te deplace ngir xool'}
-          </p>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <div className="bg-gradient-to-r from-gray-900 to-black py-8 border-t border-[#D4AF37]/30">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <div className="flex items-center justify-between mb-8">
-            <button
-              onClick={previousRoom}
-              className="flex items-center space-x-2 px-6 py-3 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-semibold"
-            >
-              <ChevronLeft size={20} />
-              <span className="hidden sm:inline">Précédent</span>
-            </button>
-
-            <div className="text-center">
-              <p className="text-[#D4AF37] font-bold text-lg mb-1">
-                {currentRoomIndex + 1} / {rooms.length}
-              </p>
-              <div className="flex space-x-2">
-                {rooms.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full ${
-                      index === currentRoomIndex ? 'bg-[#D4AF37]' : 'bg-gray-700'
-                    }`}
-                  />
-                ))}
+            {/* Instructions */}
+            <div className="absolute top-4 left-4 bg-black/90 px-4 py-3 rounded-lg border border-[#D4AF37]/30 max-w-xs">
+              <div className="flex items-start space-x-2">
+                <Info className="text-[#D4AF37] flex-shrink-0 mt-0.5" size={18} />
+                <div className="text-sm text-gray-300">
+                  <p className="font-semibold text-[#D4AF37] mb-1">Navigation :</p>
+                  <p>Glissez pour regarder autour</p>
+                  <p>Cliquez sur les points pour interagir</p>
+                </div>
               </div>
             </div>
 
-            <button
-              onClick={nextRoom}
-              className="flex items-center space-x-2 px-6 py-3 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-semibold"
-            >
-              <span className="hidden sm:inline">Suivant</span>
-              <ChevronRight size={20} />
-            </button>
-          </div>
+            {/* Carte des salles */}
+            <div className="absolute top-4 right-4 bg-black/90 px-4 py-3 rounded-lg border border-[#D4AF37]/30">
+              <p className="text-[#D4AF37] font-semibold mb-2 flex items-center">
+                <MapPin size={16} className="mr-2" />
+                Plan du musée
+              </p>
+              <div className="space-y-2">
+                {museumRooms.map(room => (
+                  <button
+                    key={room.id}
+                    onClick={() => goToRoom(room.id)}
+                    className={`block w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                      room.id === currentRoomId
+                        ? 'bg-[#D4AF37] text-black font-semibold'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                    }`}
+                  >
+                    {room.name[lang]}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
 
-          {/* Miniatures */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {rooms.map((room, index) => (
-              <button
-                key={room.id}
-                onClick={() => setCurrentRoomIndex(index)}
-                className={`relative overflow-hidden rounded-lg border-2 ${
-                  index === currentRoomIndex ? 'border-[#D4AF37]' : 'border-gray-700 hover:border-[#D4AF37]'
-                } transition-all group`}
-              >
-                <img
-                  src={room.image}
-                  alt={room.name[lang]}
-                  className="w-full h-24 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2">
-                  <p className="text-white text-xs font-semibold">{room.name[lang]}</p>
-                </div>
-              </button>
-            ))}
+      {/* Modal œuvre */}
+      {selectedArtwork && currentArtwork && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gray-900 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-[#D4AF37]">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold text-[#D4AF37]">{currentArtwork.title[lang]}</h2>
+                <button
+                  onClick={() => setSelectedArtwork(null)}
+                  className="text-gray-400 hover:text-white transition-colors text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+              <img
+                src={currentArtwork.imageUrl}
+                alt={currentArtwork.title[lang]}
+                className="w-full h-64 object-cover rounded-lg mb-4"
+              />
+              <p className="text-gray-300 mb-4">{currentArtwork.description[lang]}</p>
+              <div className="flex gap-3">
+                <Link
+                  to={`/oeuvre/${currentArtwork.id}`}
+                  className="flex-1 px-4 py-2 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-yellow-500 transition-colors text-center"
+                >
+                  Voir en détail
+                </Link>
+                <Link
+                  to={`/ar/${currentArtwork.id}`}
+                  className="flex-1 px-4 py-2 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] font-semibold rounded-lg hover:bg-[#D4AF37] hover:text-black transition-all text-center"
+                >
+                  Voir en AR
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      <style>{`
+        .hotspot-artwork {
+          background-color: rgba(212, 175, 55, 0.8);
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+        }
+        .hotspot-scene {
+          background-color: rgba(212, 175, 55, 0.6);
+          border-radius: 4px;
+        }
+        .pnlm-hotspot-base {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 };
