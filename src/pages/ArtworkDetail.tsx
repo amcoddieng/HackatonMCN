@@ -1,6 +1,6 @@
 // src/pages/ArtworkDetail.tsx
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Trophy, Award, BookOpen, CheckCircle } from 'lucide-react';
 import { getArtworkById } from '../data/data';
@@ -298,11 +298,16 @@ export const ArtworkDetail = () => {
             alt={artwork.title[lang]}
             className="w-full rounded-lg object-cover max-h-[500px]"
           />
-          {artwork.arModel && (
-            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded">
-              {t('viewInAR', 'Voir en Réalité Augmentée')}
-            </button>
-          )}
+         {artwork.arModel && (
+  <Link 
+    to={`/visite-virtuelle/${artwork.id}`}
+    className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+  >
+    <button className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300">
+      {t('viewInAR', 'Voir en Réalité Augmentée')}
+    </button>
+  </Link>
+)}
         </div>
 
         {/* Infos + onglets */}

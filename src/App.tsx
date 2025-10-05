@@ -56,6 +56,8 @@ function App() {
             
             {/* Visite Virtuelle 360° */}
             <Route path="/virtual-tour" element={<VirtualTour />} />
+            <Route path="/visite-virtuelle" element={<VirtualTour />} />
+            <Route path="/visite-virtuelle/:id" element={<VirtualTour />} />
             
             {/* Réalité Augmentée */}
             <Route path="/ar/:id" element={<ARViewPage />} />
