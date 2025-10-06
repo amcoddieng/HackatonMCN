@@ -13,7 +13,7 @@ export const Home = () => {
   const lang = i18n.language as 'fr' | 'en' | 'wo';
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-950' : 'bg-gray-50'}`}>
       {/* Hero Section */}
       <div className="relative min-h-[80vh] flex items-center">
         {/* Background Image */}
@@ -23,7 +23,7 @@ export const Home = () => {
             backgroundImage: 'url(https://images.pexels.com/photos/6069861/pexels-photo-6069861.jpeg)',
           }}
         >
-          <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-r from-black via-black/90 to-transparent' : 'bg-gradient-to-r from-white via-white/85 to-white/70'}`}></div>
+          <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-r from-gray-950 via-gray-950/90 to-transparent' : 'bg-gradient-to-r from-white via-white/85 to-white/70'}`}></div>
         </div>
 
         {/* Content */}
@@ -67,11 +67,11 @@ export const Home = () => {
       </div>
 
       {/* Section des fonctionnalités principales */}
-      <div className={`${darkMode ? 'bg-black' : 'bg-white'} py-20`}>
+      <div className={`${darkMode ? 'bg-gray-950' : 'bg-white'} py-20`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {/* Visite Virtuelle */}
-            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-gray-950 border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <Globe className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
@@ -82,7 +82,7 @@ export const Home = () => {
                      lang === 'en' ? 'Virtual Tour 360°' :
                      'Visite Virtuelle 360°'}
                   </h3>
-                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
+                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-4`}>
                     {lang === 'fr' ? "Explorez le musée depuis n'importe où dans le monde avec notre visite virtuelle immersive." :
                      lang === 'en' ? 'Explore the museum from anywhere in the world with our immersive virtual tour.' :
                      'Xool musée ci kuy nekk ci àdduna bi ak visite virtuelle immersive.'}
@@ -95,7 +95,7 @@ export const Home = () => {
             </div>
 
             {/* Guide IA */}
-            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-gray-950 border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <MessageCircle className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
@@ -104,7 +104,7 @@ export const Home = () => {
                   <h3 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-3`}>
                     Guide IA - Lumina
                   </h3>
-                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
+                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-4`}>
                     {lang === 'fr' ? "Posez vos questions à Lumina, notre guide IA, et découvrez l'histoire fascinante de chaque œuvre." :
                      lang === 'en' ? 'Ask Lumina, our AI guide, and discover the fascinating history of each artwork.' :
                      'Laaj Lumina, guide IA, te gis historia bu nekk ci bëpp liggéey.'}
@@ -117,7 +117,7 @@ export const Home = () => {
             </div>
 
             {/* Progression */}
-            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
+            <div className={`group ${darkMode ? 'bg-gradient-to-br from-gray-900 to-gray-950 border-[#D4AF37]/30' : 'bg-gradient-to-br from-gray-50 to-white border-gray-200'} p-6 rounded-lg border hover:border-[#D4AF37] transition-all transform hover:-translate-y-1`}>
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-transparent border-2 border-[#D4AF37] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D4AF37] transition-all duration-300">
                   <Award className="text-[#D4AF37] group-hover:text-black transition-colors" size={28} />
@@ -126,10 +126,10 @@ export const Home = () => {
                   <h3 className={`text-xl sm:text-2xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-3`}>
                     Progression & Badges
                   </h3>
-                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-2`}>
+                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-2`}>
                     Score: {progress.score}
                   </p>
-                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} leading-relaxed mb-4`}>
+                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed mb-4`}>
                     Badges: {progress.badges.length}
                   </p>
                   <Link to="/account" className="text-[#D4AF37] hover:text-yellow-300 font-semibold">
@@ -143,7 +143,7 @@ export const Home = () => {
       </div>
 
       {/* Section Planification et Contribution */}
-      <div className={`${darkMode ? 'bg-gradient-to-b from-black to-gray-900' : 'bg-gradient-to-b from-white to-gray-100'} py-16`}>
+      <div className={`${darkMode ? 'bg-gradient-to-b from-gray-950 to-gray-900' : 'bg-gradient-to-b from-white to-gray-100'} py-16`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Planifier une visite */}
@@ -156,7 +156,7 @@ export const Home = () => {
                    'Planifier Visite'}
                 </h3>
               </div>
-              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} mb-6 leading-relaxed`}>
+              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-6 leading-relaxed`}>
                 {lang === 'fr' ? 'Réservez votre visite guidée et profitez d\'une expérience personnalisée au Musée des Civilisations Noires.' :
                  lang === 'en' ? 'Book your guided tour and enjoy a personalized experience at the Museum of Black Civilizations.' :
                  'Réserver visite guidée bi te am expérience personnalisée ci MCN.'}
@@ -179,7 +179,7 @@ export const Home = () => {
                    'Jox sa Batal'}
                 </h3>
               </div>
-              <p className={`${darkMode ? 'text-gray-400' : 'text-gray-700'} mb-6 leading-relaxed`}>
+              <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-6 leading-relaxed`}>
                 {lang === 'fr' ? 'Partagez votre témoignage, vos souvenirs ou vos connaissances sur les œuvres de notre collection.' :
                  lang === 'en' ? 'Share your testimony, memories or knowledge about the works in our collection.' :
                  'Jox sa témoignage, sa xeeti wala sa xam-xam ci liggéey yi.'}

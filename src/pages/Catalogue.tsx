@@ -35,7 +35,7 @@ export const Catalogue = () => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-gray-50 text-black'} py-12`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-black'} py-12`}>
       <div className="container mx-auto px-4">
         <h1 className={`text-4xl font-bold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-8`}>{t('catalogue.title')}</h1>
 
@@ -45,13 +45,13 @@ export const Catalogue = () => {
             placeholder={t('search')}
             value={search}
             onChange={(e) => { setSearch(e.target.value); setCurrentPage(1); }}
-            className={`border ${darkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-black'} rounded-lg py-2 px-4 w-full md:w-1/2`}
+            className={`border ${darkMode ? 'border-gray-700 bg-gray-900 text-gray-100' : 'border-gray-300 bg-white text-black'} rounded-lg py-2 px-4 w-full md:w-1/2`}
           />
 
           <select
             value={category}
             onChange={(e) => { setCategory(e.target.value); setCurrentPage(1); }}
-            className={`border ${darkMode ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-black'} rounded-lg py-2 px-4 w-full md:w-1/2`}
+            className={`border ${darkMode ? 'border-gray-700 bg-gray-900 text-gray-100' : 'border-gray-300 bg-white text-black'} rounded-lg py-2 px-4 w-full md:w-1/2`}
           >
             <option value="">{t('allCategories')}</option>
             {categories.map((cat) => (
@@ -76,7 +76,7 @@ export const Catalogue = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
-                  <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-black'} mb-2`}>{artwork.title[lang]}</h3>
+                  <h3 className={`text-xl font-bold ${darkMode ? 'text-gray-100' : 'text-black'} mb-2`}>{artwork.title[lang]}</h3>
                   <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{artwork.category}</p>
                 </div>
               </a>
@@ -89,7 +89,7 @@ export const Catalogue = () => {
             <button
               onClick={handlePrev}
               disabled={currentPage === 1}
-              className={`${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} px-4 py-2 rounded disabled:opacity-50`}
+              className={`${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-200 text-black'} px-4 py-2 rounded disabled:opacity-50`}
             >
               {t('previous')}
             </button>
@@ -99,7 +99,7 @@ export const Catalogue = () => {
             <button
               onClick={handleNext}
               disabled={currentPage === totalPages}
-              className={`${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'} px-4 py-2 rounded disabled:opacity-50`}
+              className={`${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-200 text-black'} px-4 py-2 rounded disabled:opacity-50`}
             >
               {t('next')}
             </button>

@@ -1,5 +1,4 @@
 // src/components/Chatbot.tsx
-
 import { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -27,14 +26,14 @@ export const Chatbot = () => {
           <div className="bg-yellow-600 text-black p-4 rounded-t-lg font-bold">
             {t('chatbot.title')}
           </div>
-          <div className={`flex-1 p-4 overflow-y-auto ${darkMode ? 'text-white' : 'text-black'}`}>
+          <div className={`flex-1 p-4 overflow-y-auto ${darkMode ? 'text-gray-100' : 'text-black'}`}>
             <p className="text-sm">{t('chatbot.greeting')}</p>
           </div>
           <div className={`p-4 border-t ${darkMode ? 'border-yellow-600/30' : 'border-gray-300'}`}>
             <input
               type="text"
               placeholder={t('chatbot.placeholder')}
-              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-800 text-white border-gray-700' : 'bg-gray-100 text-black border-gray-300'} rounded-lg border focus:outline-none focus:border-yellow-600`}
+              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-800 text-gray-100 border-gray-700' : 'bg-gray-100 text-black border-gray-300'} rounded-lg border focus:outline-none focus:border-yellow-600`}
             />
           </div>
         </div>

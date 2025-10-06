@@ -18,6 +18,7 @@ import { VisitPlanner } from './pages/VisitPlanner';
 import { Contribution } from './pages/Contribution';
 import { initializeLocalStorage } from './utils/localStorageHelpers';
 import './utils/i18n';
+import { Auth } from './pages/Auth';
 
 function App() {
   // Initialiser le localStorage au premier chargement
@@ -59,6 +60,10 @@ function App() {
               {/* Contribution */}
               <Route path="/contribution" element={<Contribution />} />
               
+              {/* Connexion & Inscription */}
+              <Route path="/auth" element={<Auth />} />
+
+
               {/* Route 404 - Redirection vers Home */}
               <Route path="*" element={<Home />} />
             </Routes>
