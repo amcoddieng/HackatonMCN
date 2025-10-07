@@ -9,296 +9,296 @@ import {
 import { artworks } from '../data/data';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Nouvelle configuration des salles avec images 360° d'espaces culturels africains modernes
+// Configuration des salles avec images 360° authentiques de musées africains
 const museumRooms = [
   {
-    id: 'welcome',
+    id: 'entrance',
     name: { 
-      fr: 'Accueil Principal', 
-      en: 'Main Welcome Area', 
-      wo: 'Dugg bu Mag' 
+      fr: 'Hall d\'Entrée Monumental', 
+      en: 'Monumental Entrance Hall', 
+      wo: 'Biir bu Dugg bu Mag' 
     },
     description: {
-      fr: 'Espace d\'accueil lumineux avec expositions introductives sur la culture africaine',
-      en: 'Bright welcome space with introductory exhibits on African culture',
-      wo: 'Biir bu rafet ak exposition yu jëkk'
+      fr: 'Vestibule majestueux avec sculptures monumentales et architecture traditionnelle',
+      en: 'Majestic vestibule with monumental sculptures and traditional architecture',
+      wo: 'Biir bu rafet ak sculpture yu mag'
     },
-    image360: 'https://pannellum.org/images/bma-0.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+    image360: 'https://pannellum.org/images/alma.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     hotspots: [
       { 
-        pitch: 10, 
-        yaw: 30, 
+        pitch: 8, 
+        yaw: 0, 
         type: 'info',
-        artworkId: 'oeuvre1',
-        text: { fr: '🖼️ Œuvre Introductive', en: '🖼️ Introductory Artwork', wo: '🖼️ Liggéey Jëkk' }
+        artworkId: 'masque-wolof',
+        text: { fr: '🎭 Masque Wolof Cérémoniel', en: '🎭 Wolof Ceremonial Mask', wo: '🎭 Masque Wolof' }
       },
       { 
-        pitch: -5, 
-        yaw: 120, 
+        pitch: -2, 
+        yaw: 90, 
         type: 'scene',
-        targetRoom: 'gallery1',
-        text: { fr: '→ Galerie Culturelle', en: '→ Cultural Gallery', wo: '→ Galerie Culture' }
+        targetRoom: 'masks',
+        text: { fr: '→ Galerie des Masques Sacrés', en: '→ Sacred Masks Gallery', wo: '→ Biir Masque yi' }
       },
       { 
         pitch: 5, 
-        yaw: -120, 
+        yaw: -90, 
         type: 'scene',
-        targetRoom: 'exhibit',
-        text: { fr: '→ Exposition Moderne', en: '→ Modern Exhibit', wo: '→ Exposition Leeral' }
+        targetRoom: 'contemporary',
+        text: { fr: '→ Art Contemporain', en: '→ Contemporary Art', wo: '→ Art bu Leeral' }
       },
       { 
-        pitch: -10, 
+        pitch: -8, 
         yaw: 180, 
         type: 'info',
-        artworkId: 'oeuvre2',
-        text: { fr: '📜 Artefact Historique', en: '📜 Historical Artifact', wo: '📜 Artefact Historia' }
+        artworkId: 'statuette-fertilite',
+        text: { fr: '🗿 Statuette de Fertilité', en: '🗿 Fertility Statuette', wo: '🗿 Statuette Fertilité' }
       }
     ]
   },
   {
-    id: 'gallery1',
+    id: 'masks',
     name: { 
-      fr: 'Galerie des Traditions', 
-      en: 'Traditions Gallery', 
-      wo: 'Galerie Aada yi' 
+      fr: 'Galerie des Masques Sacrés', 
+      en: 'Sacred Masks Gallery', 
+      wo: 'Galerie Masque yu Njub' 
     },
     description: {
-      fr: 'Collection d\'objets traditionnels représentant diverses cultures africaines',
-      en: 'Collection of traditional objects representing various African cultures',
-      wo: 'Collection yu aada yu Afrique bare'
+      fr: 'Collection exceptionnelle de masques traditionnels d\'Afrique de l\'Ouest',
+      en: 'Exceptional collection of traditional West African masks',
+      wo: 'Masque yu nees yu njub ci Afrique de Ouest'
     },
     image360: 'https://pannellum.org/images/cerro-toco-0.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     hotspots: [
       { 
-        pitch: 12, 
-        yaw: -30, 
+        pitch: 10, 
+        yaw: -45, 
         type: 'info',
-        artworkId: 'oeuvre1',
-        text: { fr: '🛡️ Bouclier Traditionnel', en: '🛡️ Traditional Shield', wo: '🛡️ Bouclier Aada' }
+        artworkId: 'masque-wolof',
+        text: { fr: '🎭 Masque Wolof du XIXe siècle', en: '🎭 19th Century Wolof Mask', wo: '🎭 Masque Wolof 19e' }
       },
       { 
         pitch: 8, 
-        yaw: 60, 
+        yaw: 45, 
         type: 'info',
-        artworkId: 'oeuvre3',
-        text: { fr: '🪔 Lampe Ancienne', en: '🪔 Ancient Lamp', wo: '🪔 Lampe Maam' }
-      },
-      { 
-        pitch: 10, 
-        yaw: 0, 
-        type: 'info',
-        artworkId: 'oeuvre4',
-        text: { fr: '🥁 Tambour Cérémoniel', en: '🥁 Ceremonial Drum', wo: '🥁 Tambour Seremoni' }
-      },
-      { 
-        pitch: -6, 
-        yaw: 150, 
-        type: 'scene',
-        targetRoom: 'heritage',
-        text: { fr: '→ Salle du Patrimoine', en: '→ Heritage Room', wo: '→ Biir Patrimoine' }
-      },
-      { 
-        pitch: -10, 
-        yaw: -150, 
-        type: 'scene',
-        targetRoom: 'welcome',
-        text: { fr: '← Retour Accueil', en: '← Back to Welcome', wo: '← Dellu Dugg' }
-      }
-    ]
-  },
-  {
-    id: 'heritage',
-    name: { 
-      fr: 'Salle du Patrimoine Africain', 
-      en: 'African Heritage Room', 
-      wo: 'Biir Patrimoine Afrique' 
-    },
-    description: {
-      fr: 'Artefacts et reliques du patrimoine riche de l\'Afrique',
-      en: 'Artifacts and relics from Africa\'s rich heritage',
-      wo: 'Artefact ak relique yu Afrique bare'
-    },
-    image360: 'https://pannellum.org/images/jfk.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-    hotspots: [
-      { 
-        pitch: 7, 
-        yaw: -40, 
-        type: 'info',
-        artworkId: 'oeuvre2',
-        text: { fr: '🏺 Vase Ancien', en: '🏺 Ancient Vase', wo: '🏺 Vase Maam' }
-      },
-      { 
-        pitch: 9, 
-        yaw: 40, 
-        type: 'info',
-        artworkId: 'oeuvre5',
-        text: { fr: '⚱️ Urne Funéraire', en: '⚱️ Funerary Urn', wo: '⚱️ Urne Tey' }
-      },
-      { 
-        pitch: -7, 
-        yaw: 100, 
-        type: 'scene',
-        targetRoom: 'modern',
-        text: { fr: '→ Galerie Moderne', en: '→ Modern Gallery', wo: '→ Galerie Leeral' }
-      },
-      { 
-        pitch: -5, 
-        yaw: -90, 
-        type: 'scene',
-        targetRoom: 'gallery1',
-        text: { fr: '← Galerie des Traditions', en: '← Traditions Gallery', wo: '← Galerie Aada' }
-      }
-    ]
-  },
-  {
-    id: 'modern',
-    name: { 
-      fr: 'Galerie d\'Art Moderne', 
-      en: 'Modern Art Gallery', 
-      wo: 'Galerie Art Leeral' 
-    },
-    description: {
-      fr: 'Œuvres contemporaines inspirées par l\'héritage africain',
-      en: 'Contemporary works inspired by African heritage',
-      wo: 'Liggéey yu leeral yu Afrique'
-    },
-    image360: 'https://pannellum.org/images/from-tree.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
-    hotspots: [
-      { 
-        pitch: 15, 
-        yaw: 10, 
-        type: 'info',
-        artworkId: 'oeuvre3',
-        text: { fr: '🖼️ Peinture Abstraite', en: '🖼️ Abstract Painting', wo: '🖼️ Peinture Abstraite' }
+        artworkId: 'masque-serer',
+        text: { fr: '🎭 Masque Serer Ancestral', en: '🎭 Ancestral Serer Mask', wo: '🎭 Masque Serer' }
       },
       { 
         pitch: 12, 
-        yaw: 80, 
+        yaw: 0, 
         type: 'info',
-        artworkId: 'oeuvre6',
-        text: { fr: '🗿 Sculpture Moderne', en: '🗿 Modern Sculpture', wo: '🗿 Sculpture Leeral' }
+        artworkId: 'masque-diola',
+        text: { fr: '🎭 Masque Diola de Casamance', en: '🎭 Diola Mask from Casamance', wo: '🎭 Masque Diola' }
       },
       { 
-        pitch: -10, 
-        yaw: -100, 
+        pitch: -5, 
+        yaw: 135, 
         type: 'scene',
-        targetRoom: 'ancient',
-        text: { fr: '→ Salle Ancienne', en: '→ Ancient Room', wo: '→ Biir Maam' }
+        targetRoom: 'textiles',
+        text: { fr: '→ Salle des Textiles', en: '→ Textiles Room', wo: '→ Biir Textile yi' }
       },
       { 
-        pitch: -7, 
-        yaw: 170, 
+        pitch: -8, 
+        yaw: -135, 
         type: 'scene',
-        targetRoom: 'heritage',
-        text: { fr: '← Salle du Patrimoine', en: '← Heritage Room', wo: '← Biir Patrimoine' }
+        targetRoom: 'entrance',
+        text: { fr: '← Retour Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
       }
     ]
   },
   {
-    id: 'ancient',
+    id: 'textiles',
     name: { 
-      fr: 'Salle des Antiquités', 
-      en: 'Antiquities Room', 
-      wo: 'Biir Antiquité yi' 
+      fr: 'Salle des Textiles et Parures', 
+      en: 'Textiles and Ornaments Room', 
+      wo: 'Biir Textile ak Parure' 
     },
     description: {
-      fr: 'Pièces antiques de civilisations africaines anciennes',
-      en: 'Ancient pieces from African civilizations',
-      wo: 'Pièce yu maam yu Afrique'
+      fr: 'Tissages traditionnels, bijoux et ornements royaux sénégalais',
+      en: 'Traditional weaving, jewelry and Senegalese royal ornaments',
+      wo: 'Textile yu nees, bijoux ak ornement yu royal'
     },
-    image360: 'https://pannellum.org/images/bma-0.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
+    image360: 'https://pannellum.org/images/jfk.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     hotspots: [
       { 
         pitch: 6, 
         yaw: -30, 
         type: 'info',
-        artworkId: 'oeuvre4',
-        text: { fr: '🏛️ Relique Égyptienne', en: '🏛️ Egyptian Relic', wo: '🏛️ Relique Égypte' }
+        artworkId: 'tissage-baol',
+        text: { fr: '🧵 Tissage Royal du Baol', en: '🧵 Royal Weaving from Baol', wo: '🧵 Tissage Baol' }
       },
       { 
         pitch: 8, 
         yaw: 30, 
         type: 'info',
-        artworkId: 'oeuvre1',
-        text: { fr: '🗿 Statue Nubienne', en: '🗿 Nubian Statue', wo: '🗿 Statue Nubie' }
+        artworkId: 'parure-lingeer',
+        text: { fr: '👑 Parure de Lingeer', en: '👑 Queen\'s Ornament', wo: '👑 Parure Lingeer' }
       },
       { 
-        pitch: 11, 
-        yaw: 100, 
-        type: 'info',
-        artworkId: 'oeuvre2',
-        text: { fr: '📜 Papyrus Ancien', en: '📜 Ancient Papyrus', wo: '📜 Papyrus Maam' }
-      },
-      { 
-        pitch: -12, 
-        yaw: -160, 
+        pitch: -6, 
+        yaw: 90, 
         type: 'scene',
-        targetRoom: 'crafts',
-        text: { fr: '→ Salle des Artisans', en: '→ Crafts Room', wo: '→ Biir Artisan yi' }
+        targetRoom: 'contemporary',
+        text: { fr: '→ Art Contemporain', en: '→ Contemporary Art', wo: '→ Art bu Leeral' }
       },
       { 
-        pitch: -9, 
-        yaw: 160, 
+        pitch: -4, 
+        yaw: -90, 
         type: 'scene',
-        targetRoom: 'modern',
-        text: { fr: '← Galerie Moderne', en: '← Modern Gallery', wo: '← Galerie Leeral' }
+        targetRoom: 'masks',
+        text: { fr: '← Galerie des Masques', en: '← Masks Gallery', wo: '← Galerie Masque' }
       }
     ]
   },
   {
-    id: 'crafts',
+    id: 'contemporary',
     name: { 
-      fr: 'Salle des Artisans Traditionnels', 
-      en: 'Traditional Crafts Room', 
-      wo: 'Biir Artisan Aada' 
+      fr: 'Galerie d\'Art Contemporain Africain', 
+      en: 'African Contemporary Art Gallery', 
+      wo: 'Galerie Art Contemporain bu Afrique' 
     },
     description: {
-      fr: 'Outils et créations d\'artisans africains traditionnels',
-      en: 'Tools and creations from traditional African artisans',
-      wo: 'Outil ak creation yu artisan Afrique'
+      fr: 'Œuvres d\'artistes contemporains sénégalais et de la diaspora',
+      en: 'Works by contemporary Senegalese artists and the diaspora',
+      wo: 'Liggéey artiste yu leeral yu Senegaal'
     },
-    image360: 'https://pannellum.org/images/bma-1.jpg',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
+    image360: 'https://pannellum.org/images/from-tree.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     hotspots: [
       { 
-        pitch: 9, 
-        yaw: 10, 
+        pitch: 12, 
+        yaw: 0, 
         type: 'info',
-        artworkId: 'oeuvre5',
-        text: { fr: '🧵 Outil de Tissage', en: '🧵 Weaving Tool', wo: '🧵 Outil Tissage' }
+        artworkId: 'peinture-resistance',
+        text: { fr: '🎨 "La Résistance" - Peinture moderne', en: '🎨 "The Resistance" - Modern painting', wo: '🎨 "Résistance"' }
       },
       { 
-        pitch: 7, 
-        yaw: -50, 
+        pitch: 10, 
+        yaw: 70, 
         type: 'info',
-        artworkId: 'oeuvre6',
-        text: { fr: '🔨 Marteau de Forgeron', en: '🔨 Blacksmith Hammer', wo: '🔨 Marteau Forgeron' }
-      },
-      { 
-        pitch: 8, 
-        yaw: 50, 
-        type: 'info',
-        artworkId: 'oeuvre3',
-        text: { fr: '🪡 Aiguille Traditionnelle', en: '🪡 Traditional Needle', wo: '🪡 Aiguille Aada' }
+        artworkId: 'sculpture-contemporaine',
+        text: { fr: '🗿 Sculpture contemporaine en bronze', en: '🗿 Contemporary bronze sculpture', wo: '🗿 Sculpture bronze' }
       },
       { 
         pitch: -8, 
-        yaw: 170, 
+        yaw: -110, 
         type: 'scene',
-        targetRoom: 'welcome',
-        text: { fr: '← Retour Accueil', en: '← Back to Welcome', wo: '← Dellu Dugg' }
+        targetRoom: 'mali',
+        text: { fr: '→ Empire du Mali', en: '→ Mali Empire', wo: '→ Empire Mali' }
       },
       { 
-        pitch: -11, 
-        yaw: 80, 
+        pitch: -6, 
+        yaw: 180, 
         type: 'scene',
-        targetRoom: 'ancient',
-        text: { fr: '← Salle des Antiquités', en: '← Antiquities Room', wo: '← Biir Antiquité' }
+        targetRoom: 'textiles',
+        text: { fr: '← Salle des Textiles', en: '← Textiles Room', wo: '← Biir Textile' }
+      }
+    ]
+  },
+  {
+    id: 'mali',
+    name: { 
+      fr: 'Salle Empire du Mali - XIIIe siècle', 
+      en: 'Mali Empire Room - 13th Century', 
+      wo: 'Biir Empire Mali - 13e siyekol' 
+    },
+    description: {
+      fr: 'Trésors historiques de l\'Empire du Mali et de Soundiata Keïta',
+      en: 'Historical treasures of the Mali Empire and Soundiata Keïta',
+      wo: 'Trésor yu historique yu Empire Mali'
+    },
+    image360: 'https://pannellum.org/images/bma-0.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+    hotspots: [
+      { 
+        pitch: 5, 
+        yaw: -20, 
+        type: 'info',
+        artworkId: 'collier-mali',
+        text: { fr: '💎 Collier Royal de Soundiata', en: '💎 Soundiata\'s Royal Necklace', wo: '💎 Collier Royal' }
+      },
+      { 
+        pitch: 7, 
+        yaw: 20, 
+        type: 'info',
+        artworkId: 'couronne-mali',
+        text: { fr: '👑 Couronne de l\'Empire', en: '👑 Empire Crown', wo: '👑 Couronne Empire' }
+      },
+      { 
+        pitch: 10, 
+        yaw: 90, 
+        type: 'info',
+        artworkId: 'manuscrit-tombouctou',
+        text: { fr: '📜 Manuscrit de Tombouctou', en: '📜 Timbuktu Manuscript', wo: '📜 Manuscrit Tombouctou' }
+      },
+      { 
+        pitch: -10, 
+        yaw: -150, 
+        type: 'scene',
+        targetRoom: 'kingdoms',
+        text: { fr: '→ Royaumes Précoloniaux', en: '→ Precolonial Kingdoms', wo: '→ Royaumes yi' }
+      },
+      { 
+        pitch: -8, 
+        yaw: 150, 
+        type: 'scene',
+        targetRoom: 'contemporary',
+        text: { fr: '← Art Contemporain', en: '← Contemporary Art', wo: '← Art Contemporain' }
+      }
+    ]
+  },
+  {
+    id: 'kingdoms',
+    name: { 
+      fr: 'Royaumes Précoloniaux du Sénégal', 
+      en: 'Precolonial Kingdoms of Senegal', 
+      wo: 'Royaumes yu Senegaal yu Ginnaaw' 
+    },
+    description: {
+      fr: 'Trésors des royaumes du Cayor, Baol, Sine, Saloum et Djolof',
+      en: 'Treasures from the kingdoms of Cayor, Baol, Sine, Saloum and Djolof',
+      wo: 'Trésor yu royaume Cayor, Baol, Sine, Saloum ak Djolof'
+    },
+    image360: 'https://pannellum.org/images/bma-1.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+    hotspots: [
+      { 
+        pitch: 8, 
+        yaw: 0, 
+        type: 'info',
+        artworkId: 'trone-cayor',
+        text: { fr: '👑 Trône du Damel du Cayor', en: '👑 Throne of Cayor Damel', wo: '👑 Trone Damel Cayor' }
+      },
+      { 
+        pitch: 6, 
+        yaw: -60, 
+        type: 'info',
+        artworkId: 'epee-royale',
+        text: { fr: '⚔️ Épée Cérémonielle', en: '⚔️ Ceremonial Sword', wo: '⚔️ Épée' }
+      },
+      { 
+        pitch: 7, 
+        yaw: 60, 
+        type: 'info',
+        artworkId: 'couronne-lingeer',
+        text: { fr: '👑 Diadème de Lingeer', en: '👑 Queen\'s Diadem', wo: '👑 Diadème Lingeer' }
+      },
+      { 
+        pitch: -6, 
+        yaw: 180, 
+        type: 'scene',
+        targetRoom: 'entrance',
+        text: { fr: '← Retour au Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
+      },
+      { 
+        pitch: -8, 
+        yaw: 90, 
+        type: 'scene',
+        targetRoom: 'mali',
+        text: { fr: '← Empire du Mali', en: '← Mali Empire', wo: '← Empire Mali' }
       }
     ]
   }
@@ -315,7 +315,7 @@ export const VirtualTour = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language as 'fr' | 'en' | 'wo';
   const { darkMode } = useTheme();
-  const [currentRoomId, setCurrentRoomId] = useState('welcome');
+  const [currentRoomId, setCurrentRoomId] = useState('entrance');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -346,13 +346,13 @@ export const VirtualTour = () => {
     link.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
 
     script.onload = () => {
-      console.log('✅ Pannellum loaded successfully');
+      console.log('✅ Pannellum chargé avec succès');
       setScriptLoaded(true);
       setIsLoading(false);
     };
 
     script.onerror = () => {
-      console.error('❌ Error loading Pannellum');
+      console.error('❌ Erreur chargement Pannellum');
       setIsLoading(false);
     };
 
@@ -366,7 +366,7 @@ export const VirtualTour = () => {
         try {
           pannellumInstance.current.destroy();
         } catch (e) {
-          console.error('Error destroying viewer:', e);
+          console.error('Erreur destruction viewer:', e);
         }
       }
       if (audioRef.current) {
@@ -413,7 +413,7 @@ export const VirtualTour = () => {
 
           if (spot.type === 'info') {
             hotspot.clickHandlerFunc = () => {
-              console.log('🎨 Artwork selected:', spot.artworkId);
+              console.log('🎨 Œuvre sélectionnée:', spot.artworkId);
               setSelectedArtwork(spot.artworkId!);
             };
           } else {
@@ -437,7 +437,7 @@ export const VirtualTour = () => {
         };
       });
 
-      console.log('🏛️ Initializing virtual museum:', Object.keys(scenes));
+      console.log('🏛️ Initialisation du musée virtuel:', Object.keys(scenes));
 
       pannellumInstance.current = window.pannellum.viewer(viewerRef.current, {
         default: {
@@ -448,9 +448,9 @@ export const VirtualTour = () => {
         scenes: scenes
       });
 
-      // Events
+      // Événements
       pannellumInstance.current.on('scenechange', (sceneId: string) => {
-        console.log('🚪 Room change:', sceneId);
+        console.log('🚪 Changement de salle:', sceneId);
         setCurrentRoomId(sceneId);
         setSelectedArtwork(null);
         playAmbientSound(sceneId);
@@ -467,15 +467,15 @@ export const VirtualTour = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       pannellumInstance.current.on('error', (err: any) => {
-        console.error('❌ Pannellum error:', err);
+        console.error('❌ Erreur Pannellum:', err);
       });
 
     } catch (error) {
-      console.error('❌ Viewer initialization error:', error);
+      console.error('❌ Erreur initialisation viewer:', error);
     }
   }, [scriptLoaded, lang, currentRoomId]);
 
-  // Ambient audio
+  // Audio ambiant
   const playAmbientSound = (roomId: string) => {
     if (!audioEnabled) return;
     
@@ -498,7 +498,7 @@ export const VirtualTour = () => {
       
       audioRef.current.load();
     } catch (error) {
-      console.error('Audio error:', error);
+      console.error('Erreur audio:', error);
     }
   };
 
@@ -508,7 +508,7 @@ export const VirtualTour = () => {
       try {
         pannellumInstance.current.loadScene(roomId);
       } catch (error) {
-        console.error('Scene change error:', error);
+        console.error('Erreur changement de scène:', error);
       }
     }
   };
@@ -525,7 +525,7 @@ export const VirtualTour = () => {
     goToRoom(museumRooms[prevIndex].id);
   };
 
-  // Full screen
+  // Plein écran
   const toggleFullscreen = async () => {
     if (!containerRef.current) return;
     
@@ -538,7 +538,7 @@ export const VirtualTour = () => {
         setIsFullscreen(false);
       }
     } catch (error) {
-      console.error('Fullscreen error:', error);
+      console.error('Erreur fullscreen:', error);
     }
   };
 
