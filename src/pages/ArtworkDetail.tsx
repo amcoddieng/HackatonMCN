@@ -53,24 +53,24 @@ export const ArtworkDetail = () => {
 
   if (!artwork) {
     return (
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-black'} flex items-center justify-center`}>
+      <div className={`min-h-screen ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-50 text-black'} flex items-center justify-center transition-all duration-300`}>
         <p className="text-xl">{t('artworkNotFound', 'Œuvre non trouvée')}</p>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-black'} py-8 px-4 md:px-12`}>
+    <div className={`min-h-screen ${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-50 text-black"} py-8 px-4 md:px-12 transition-all duration-300`}>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Image + AR */}
         <div className="relative">
           <img
             src={artwork.imageUrl}
             alt={artwork.title[lang]}
-            className="w-full rounded-lg object-cover max-h-[500px]"
+            className="w-full rounded-lg object-cover max-h-[500px] shadow-lg"
           />
           {artwork.arModel && (
-            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded text-sm md:text-base">
+            <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded text-sm md:text-base transition-all duration-300 hover:shadow-lg">
               {t('viewInAR', 'Voir en Réalité Augmentée')}
             </button>
           )}
@@ -95,7 +95,7 @@ export const ArtworkDetail = () => {
 
           {/* Onglets */}
           <div className="mt-4 flex flex-col">
-            <div className={`flex border-b ${darkMode ? 'border-gray-700' : 'border-gray-300'}`}>
+            <div className={`flex border-b ${darkMode ? 'border-gray-600' : 'border-gray-300'}`}>
               {['description', 'history', 'cultural'].map((tab) => (
                 <button
                   key={tab}
@@ -103,23 +103,22 @@ export const ArtworkDetail = () => {
                     activeTab === tab 
                       ? `border-b-2 border-yellow-400 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}` 
                       : darkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`}
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  onClick={() => setActiveTab(tab as any)}
+                  } transition-colors duration-300`}
+                  onClick={() => setActiveTab(tab as 'description' | 'history' | 'cultural')}
                 >
                   {t(tab, tab.charAt(0).toUpperCase() + tab.slice(1))}
                 </button>
               ))}
             </div>
 
-            <div className={`${darkMode ? 'bg-gray-900 text-gray-300 border border-gray-700' : 'bg-white text-gray-700 border border-gray-200'} p-6 rounded-b-lg shadow-md mt-2 min-h-[150px] flex flex-col`}>
+            <div className={`${darkMode ? 'bg-gray-700 text-gray-300 border border-gray-600' : 'bg-white text-gray-700 border border-gray-200'} p-6 rounded-b-lg shadow-md mt-2 min-h-[150px] flex flex-col transition-all duration-300`}>
               <p className="flex-grow">{getActiveText()}</p>
 
               {/* Boutons responsive */}
               <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
                 <button
                   onClick={toggleSpeech}
-                  className="flex items-center justify-center gap-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded transition"
+                  className="flex items-center justify-center gap-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded transition-all duration-300 hover:shadow-lg"
                 >
                   {isSpeaking ? (
                     <>
@@ -136,7 +135,7 @@ export const ArtworkDetail = () => {
 
                 {artwork.videoUrl && (
                   <a href={artwork.videoUrl} target="_blank" rel="noopener noreferrer">
-                    <button className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded w-full sm:w-auto">
+                    <button className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded w-full sm:w-auto transition-all duration-300 hover:shadow-lg">
                       {t('viewVideo', 'Voir la vidéo')}
                     </button>
                   </a>

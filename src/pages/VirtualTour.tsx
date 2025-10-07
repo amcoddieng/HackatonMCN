@@ -1,5 +1,4 @@
 // src/pages/VirtualTour.tsx
-
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -10,296 +9,296 @@ import {
 import { artworks } from '../data/data';
 import { useTheme } from '../contexts/ThemeContext';
 
-// Configuration des salles avec images 360° authentiques de musées africains
+// Nouvelle configuration des salles avec images 360° d'espaces culturels africains modernes
 const museumRooms = [
   {
-    id: 'entrance',
+    id: 'welcome',
     name: { 
-      fr: 'Hall d\'Entrée Monumental', 
-      en: 'Monumental Entrance Hall', 
-      wo: 'Biir bu Dugg bu Mag' 
+      fr: 'Accueil Principal', 
+      en: 'Main Welcome Area', 
+      wo: 'Dugg bu Mag' 
     },
     description: {
-      fr: 'Vestibule majestueux avec sculptures monumentales et architecture traditionnelle',
-      en: 'Majestic vestibule with monumental sculptures and traditional architecture',
-      wo: 'Biir bu rafet ak sculpture yu mag'
+      fr: 'Espace d\'accueil lumineux avec expositions introductives sur la culture africaine',
+      en: 'Bright welcome space with introductory exhibits on African culture',
+      wo: 'Biir bu rafet ak exposition yu jëkk'
     },
-    image360: 'https://cdn.polyhaven.com/asset_img/primary/mirrored_hall.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-    hotspots: [
-      { 
-        pitch: 8, 
-        yaw: 0, 
-        type: 'info',
-        artworkId: 'masque-wolof',
-        text: { fr: '🎭 Masque Wolof Cérémoniel', en: '🎭 Wolof Ceremonial Mask', wo: '🎭 Masque Wolof' }
-      },
-      { 
-        pitch: -2, 
-        yaw: 90, 
-        type: 'scene',
-        targetRoom: 'masks',
-        text: { fr: '→ Galerie des Masques Sacrés', en: '→ Sacred Masks Gallery', wo: '→ Biir Masque yi' }
-      },
-      { 
-        pitch: 5, 
-        yaw: -90, 
-        type: 'scene',
-        targetRoom: 'contemporary',
-        text: { fr: '→ Art Contemporain', en: '→ Contemporary Art', wo: '→ Art bu Leeral' }
-      },
-      { 
-        pitch: -8, 
-        yaw: 180, 
-        type: 'info',
-        artworkId: 'statuette-fertilite',
-        text: { fr: '🗿 Statuette de Fertilité', en: '🗿 Fertility Statuette', wo: '🗿 Statuette Fertilité' }
-      }
-    ]
-  },
-  {
-    id: 'masks',
-    name: { 
-      fr: 'Galerie des Masques Sacrés', 
-      en: 'Sacred Masks Gallery', 
-      wo: 'Galerie Masque yu Njub' 
-    },
-    description: {
-      fr: 'Collection exceptionnelle de masques traditionnels d\'Afrique de l\'Ouest',
-      en: 'Exceptional collection of traditional West African masks',
-      wo: 'Masque yu nees yu njub ci Afrique de Ouest'
-    },
-    image360: 'https://cdn.polyhaven.com/asset_img/primary/artist_workshop.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    image360: 'https://pannellum.org/images/bma-0.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
     hotspots: [
       { 
         pitch: 10, 
-        yaw: -45, 
+        yaw: 30, 
         type: 'info',
-        artworkId: 'masque-wolof',
-        text: { fr: '🎭 Masque Wolof du XIXe siècle', en: '🎭 19th Century Wolof Mask', wo: '🎭 Masque Wolof 19e' }
-      },
-      { 
-        pitch: 8, 
-        yaw: 45, 
-        type: 'info',
-        artworkId: 'masque-serer',
-        text: { fr: '🎭 Masque Serer Ancestral', en: '🎭 Ancestral Serer Mask', wo: '🎭 Masque Serer' }
-      },
-      { 
-        pitch: 12, 
-        yaw: 0, 
-        type: 'info',
-        artworkId: 'masque-diola',
-        text: { fr: '🎭 Masque Diola de Casamance', en: '🎭 Diola Mask from Casamance', wo: '🎭 Masque Diola' }
+        artworkId: 'oeuvre1',
+        text: { fr: '🖼️ Œuvre Introductive', en: '🖼️ Introductory Artwork', wo: '🖼️ Liggéey Jëkk' }
       },
       { 
         pitch: -5, 
-        yaw: 135, 
+        yaw: 120, 
         type: 'scene',
-        targetRoom: 'textiles',
-        text: { fr: '→ Salle des Textiles', en: '→ Textiles Room', wo: '→ Biir Textile yi' }
+        targetRoom: 'gallery1',
+        text: { fr: '→ Galerie Culturelle', en: '→ Cultural Gallery', wo: '→ Galerie Culture' }
       },
       { 
-        pitch: -8, 
-        yaw: -135, 
+        pitch: 5, 
+        yaw: -120, 
         type: 'scene',
-        targetRoom: 'entrance',
-        text: { fr: '← Retour Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
+        targetRoom: 'exhibit',
+        text: { fr: '→ Exposition Moderne', en: '→ Modern Exhibit', wo: '→ Exposition Leeral' }
+      },
+      { 
+        pitch: -10, 
+        yaw: 180, 
+        type: 'info',
+        artworkId: 'oeuvre2',
+        text: { fr: '📜 Artefact Historique', en: '📜 Historical Artifact', wo: '📜 Artefact Historia' }
       }
     ]
   },
   {
-    id: 'textiles',
+    id: 'gallery1',
     name: { 
-      fr: 'Salle des Textiles et Parures', 
-      en: 'Textiles and Ornaments Room', 
-      wo: 'Biir Textile ak Parure' 
+      fr: 'Galerie des Traditions', 
+      en: 'Traditions Gallery', 
+      wo: 'Galerie Aada yi' 
     },
     description: {
-      fr: 'Tissages traditionnels, bijoux et ornements royaux sénégalais',
-      en: 'Traditional weaving, jewelry and Senegalese royal ornaments',
-      wo: 'Textile yu nees, bijoux ak ornement yu royal'
+      fr: 'Collection d\'objets traditionnels représentant diverses cultures africaines',
+      en: 'Collection of traditional objects representing various African cultures',
+      wo: 'Collection yu aada yu Afrique bare'
     },
-    image360: 'https://cdn.polyhaven.com/asset_img/renders/abandoned_games_room_02/lone_monk.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-    hotspots: [
-      { 
-        pitch: 6, 
-        yaw: -30, 
-        type: 'info',
-        artworkId: 'tissage-baol',
-        text: { fr: '🧵 Tissage Royal du Baol', en: '🧵 Royal Weaving from Baol', wo: '🧵 Tissage Baol' }
-      },
-      { 
-        pitch: 8, 
-        yaw: 30, 
-        type: 'info',
-        artworkId: 'parure-lingeer',
-        text: { fr: '👑 Parure de Lingeer', en: '👑 Queen\'s Ornament', wo: '👑 Parure Lingeer' }
-      },
-      { 
-        pitch: -6, 
-        yaw: 90, 
-        type: 'scene',
-        targetRoom: 'contemporary',
-        text: { fr: '→ Art Contemporain', en: '→ Contemporary Art', wo: '→ Art Contemporain' }
-      },
-      { 
-        pitch: -4, 
-        yaw: -90, 
-        type: 'scene',
-        targetRoom: 'masks',
-        text: { fr: '← Galerie des Masques', en: '← Masks Gallery', wo: '← Galerie Masque' }
-      }
-    ]
-  },
-  {
-    id: 'contemporary',
-    name: { 
-      fr: 'Galerie d\'Art Contemporain Africain', 
-      en: 'African Contemporary Art Gallery', 
-      wo: 'Galerie Art Contemporain bu Afrique' 
-    },
-    description: {
-      fr: 'Œuvres d\'artistes contemporains sénégalais et de la diaspora',
-      en: 'Works by contemporary Senegalese artists and the diaspora',
-      wo: 'Liggéey artiste yu leeral yu Senegaal'
-    },
-    image360: 'https://cdn.polyhaven.com/asset_img/primary/art_studio.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    image360: 'https://pannellum.org/images/cerro-toco-0.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
     hotspots: [
       { 
         pitch: 12, 
-        yaw: 0, 
+        yaw: -30, 
         type: 'info',
-        artworkId: 'peinture-resistance',
-        text: { fr: '🎨 "La Résistance" - Peinture moderne', en: '🎨 "The Resistance" - Modern painting', wo: '🎨 "Résistance"' }
+        artworkId: 'oeuvre1',
+        text: { fr: '🛡️ Bouclier Traditionnel', en: '🛡️ Traditional Shield', wo: '🛡️ Bouclier Aada' }
+      },
+      { 
+        pitch: 8, 
+        yaw: 60, 
+        type: 'info',
+        artworkId: 'oeuvre3',
+        text: { fr: '🪔 Lampe Ancienne', en: '🪔 Ancient Lamp', wo: '🪔 Lampe Maam' }
       },
       { 
         pitch: 10, 
-        yaw: 70, 
+        yaw: 0, 
         type: 'info',
-        artworkId: 'sculpture-contemporaine',
-        text: { fr: '🗿 Sculpture contemporaine en bronze', en: '🗿 Contemporary bronze sculpture', wo: '🗿 Sculpture bronze' }
-      },
-      { 
-        pitch: -8, 
-        yaw: -110, 
-        type: 'scene',
-        targetRoom: 'mali',
-        text: { fr: '→ Empire du Mali', en: '→ Mali Empire', wo: '→ Empire Mali' }
+        artworkId: 'oeuvre4',
+        text: { fr: '🥁 Tambour Cérémoniel', en: '🥁 Ceremonial Drum', wo: '🥁 Tambour Seremoni' }
       },
       { 
         pitch: -6, 
-        yaw: 180, 
+        yaw: 150, 
         type: 'scene',
-        targetRoom: 'textiles',
-        text: { fr: '← Salle des Textiles', en: '← Textiles Room', wo: '← Biir Textile' }
-      }
-    ]
-  },
-  {
-    id: 'mali',
-    name: { 
-      fr: 'Salle Empire du Mali - XIIIe siècle', 
-      en: 'Mali Empire Room - 13th Century', 
-      wo: 'Biir Empire Mali - 13e siyekol' 
-    },
-    description: {
-      fr: 'Trésors historiques de l\'Empire du Mali et de Soundiata Keïta',
-      en: 'Historical treasures of the Mali Empire and Soundiata Keïta',
-      wo: 'Trésor yu historique yu Empire Mali'
-    },
-    image360: 'https://cdn.polyhaven.com/asset_img/primary/distribution_board.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-    hotspots: [
-      { 
-        pitch: 5, 
-        yaw: -20, 
-        type: 'info',
-        artworkId: 'collier-mali',
-        text: { fr: '💎 Collier Royal de Soundiata', en: '💎 Soundiata\'s Royal Necklace', wo: '💎 Collier Royal' }
-      },
-      { 
-        pitch: 7, 
-        yaw: 20, 
-        type: 'info',
-        artworkId: 'couronne-mali',
-        text: { fr: '👑 Couronne de l\'Empire', en: '👑 Empire Crown', wo: '👑 Couronne Empire' }
-      },
-      { 
-        pitch: 10, 
-        yaw: 90, 
-        type: 'info',
-        artworkId: 'manuscrit-tombouctou',
-        text: { fr: '📜 Manuscrit de Tombouctou', en: '📜 Timbuktu Manuscript', wo: '📜 Manuscrit Tombouctou' }
+        targetRoom: 'heritage',
+        text: { fr: '→ Salle du Patrimoine', en: '→ Heritage Room', wo: '→ Biir Patrimoine' }
       },
       { 
         pitch: -10, 
         yaw: -150, 
         type: 'scene',
-        targetRoom: 'kingdoms',
-        text: { fr: '→ Royaumes Précoloniaux', en: '→ Precolonial Kingdoms', wo: '→ Royaumes yi' }
-      },
-      { 
-        pitch: -8, 
-        yaw: 150, 
-        type: 'scene',
-        targetRoom: 'contemporary',
-        text: { fr: '← Art Contemporain', en: '← Contemporary Art', wo: '← Art Contemporain' }
+        targetRoom: 'welcome',
+        text: { fr: '← Retour Accueil', en: '← Back to Welcome', wo: '← Dellu Dugg' }
       }
     ]
   },
   {
-    id: 'kingdoms',
+    id: 'heritage',
     name: { 
-      fr: 'Royaumes Précoloniaux du Sénégal', 
-      en: 'Precolonial Kingdoms of Senegal', 
-      wo: 'Royaumes yu Senegaal yu Ginnaaw' 
+      fr: 'Salle du Patrimoine Africain', 
+      en: 'African Heritage Room', 
+      wo: 'Biir Patrimoine Afrique' 
     },
     description: {
-      fr: 'Trésors des royaumes du Cayor, Baol, Sine, Saloum et Djolof',
-      en: 'Treasures from the kingdoms of Cayor, Baol, Sine, Saloum and Djolof',
-      wo: 'Trésor yu royaume Cayor, Baol, Sine, Saloum ak Djolof'
+      fr: 'Artefacts et reliques du patrimoine riche de l\'Afrique',
+      en: 'Artifacts and relics from Africa\'s rich heritage',
+      wo: 'Artefact ak relique yu Afrique bare'
     },
-    image360: 'https://cdn.polyhaven.com/asset_img/primary/industrial_wooden_attic.png?height=760&quality=95',
-    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+    image360: 'https://pannellum.org/images/jfk.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
     hotspots: [
       { 
-        pitch: 8, 
-        yaw: 0, 
+        pitch: 7, 
+        yaw: -40, 
         type: 'info',
-        artworkId: 'trone-cayor',
-        text: { fr: '👑 Trône du Damel du Cayor', en: '👑 Throne of Cayor Damel', wo: '👑 Trone Damel Cayor' }
+        artworkId: 'oeuvre2',
+        text: { fr: '🏺 Vase Ancien', en: '🏺 Ancient Vase', wo: '🏺 Vase Maam' }
       },
       { 
-        pitch: 6, 
-        yaw: -60, 
+        pitch: 9, 
+        yaw: 40, 
         type: 'info',
-        artworkId: 'epee-royale',
-        text: { fr: '⚔️ Épée Cérémonielle', en: '⚔️ Ceremonial Sword', wo: '⚔️ Épée' }
+        artworkId: 'oeuvre5',
+        text: { fr: '⚱️ Urne Funéraire', en: '⚱️ Funerary Urn', wo: '⚱️ Urne Tey' }
+      },
+      { 
+        pitch: -7, 
+        yaw: 100, 
+        type: 'scene',
+        targetRoom: 'modern',
+        text: { fr: '→ Galerie Moderne', en: '→ Modern Gallery', wo: '→ Galerie Leeral' }
+      },
+      { 
+        pitch: -5, 
+        yaw: -90, 
+        type: 'scene',
+        targetRoom: 'gallery1',
+        text: { fr: '← Galerie des Traditions', en: '← Traditions Gallery', wo: '← Galerie Aada' }
+      }
+    ]
+  },
+  {
+    id: 'modern',
+    name: { 
+      fr: 'Galerie d\'Art Moderne', 
+      en: 'Modern Art Gallery', 
+      wo: 'Galerie Art Leeral' 
+    },
+    description: {
+      fr: 'Œuvres contemporaines inspirées par l\'héritage africain',
+      en: 'Contemporary works inspired by African heritage',
+      wo: 'Liggéey yu leeral yu Afrique'
+    },
+    image360: 'https://pannellum.org/images/from-tree.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
+    hotspots: [
+      { 
+        pitch: 15, 
+        yaw: 10, 
+        type: 'info',
+        artworkId: 'oeuvre3',
+        text: { fr: '🖼️ Peinture Abstraite', en: '🖼️ Abstract Painting', wo: '🖼️ Peinture Abstraite' }
+      },
+      { 
+        pitch: 12, 
+        yaw: 80, 
+        type: 'info',
+        artworkId: 'oeuvre6',
+        text: { fr: '🗿 Sculpture Moderne', en: '🗿 Modern Sculpture', wo: '🗿 Sculpture Leeral' }
+      },
+      { 
+        pitch: -10, 
+        yaw: -100, 
+        type: 'scene',
+        targetRoom: 'ancient',
+        text: { fr: '→ Salle Ancienne', en: '→ Ancient Room', wo: '→ Biir Maam' }
+      },
+      { 
+        pitch: -7, 
+        yaw: 170, 
+        type: 'scene',
+        targetRoom: 'heritage',
+        text: { fr: '← Salle du Patrimoine', en: '← Heritage Room', wo: '← Biir Patrimoine' }
+      }
+    ]
+  },
+  {
+    id: 'ancient',
+    name: { 
+      fr: 'Salle des Antiquités', 
+      en: 'Antiquities Room', 
+      wo: 'Biir Antiquité yi' 
+    },
+    description: {
+      fr: 'Pièces antiques de civilisations africaines anciennes',
+      en: 'Ancient pieces from African civilizations',
+      wo: 'Pièce yu maam yu Afrique'
+    },
+    image360: 'https://pannellum.org/images/bma-0.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3',
+    hotspots: [
+      { 
+        pitch: 6, 
+        yaw: -30, 
+        type: 'info',
+        artworkId: 'oeuvre4',
+        text: { fr: '🏛️ Relique Égyptienne', en: '🏛️ Egyptian Relic', wo: '🏛️ Relique Égypte' }
+      },
+      { 
+        pitch: 8, 
+        yaw: 30, 
+        type: 'info',
+        artworkId: 'oeuvre1',
+        text: { fr: '🗿 Statue Nubienne', en: '🗿 Nubian Statue', wo: '🗿 Statue Nubie' }
+      },
+      { 
+        pitch: 11, 
+        yaw: 100, 
+        type: 'info',
+        artworkId: 'oeuvre2',
+        text: { fr: '📜 Papyrus Ancien', en: '📜 Ancient Papyrus', wo: '📜 Papyrus Maam' }
+      },
+      { 
+        pitch: -12, 
+        yaw: -160, 
+        type: 'scene',
+        targetRoom: 'crafts',
+        text: { fr: '→ Salle des Artisans', en: '→ Crafts Room', wo: '→ Biir Artisan yi' }
+      },
+      { 
+        pitch: -9, 
+        yaw: 160, 
+        type: 'scene',
+        targetRoom: 'modern',
+        text: { fr: '← Galerie Moderne', en: '← Modern Gallery', wo: '← Galerie Leeral' }
+      }
+    ]
+  },
+  {
+    id: 'crafts',
+    name: { 
+      fr: 'Salle des Artisans Traditionnels', 
+      en: 'Traditional Crafts Room', 
+      wo: 'Biir Artisan Aada' 
+    },
+    description: {
+      fr: 'Outils et créations d\'artisans africains traditionnels',
+      en: 'Tools and creations from traditional African artisans',
+      wo: 'Outil ak creation yu artisan Afrique'
+    },
+    image360: 'https://pannellum.org/images/bma-1.jpg',
+    ambientSound: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3',
+    hotspots: [
+      { 
+        pitch: 9, 
+        yaw: 10, 
+        type: 'info',
+        artworkId: 'oeuvre5',
+        text: { fr: '🧵 Outil de Tissage', en: '🧵 Weaving Tool', wo: '🧵 Outil Tissage' }
       },
       { 
         pitch: 7, 
-        yaw: 60, 
+        yaw: -50, 
         type: 'info',
-        artworkId: 'couronne-lingeer',
-        text: { fr: '👑 Diadème de Lingeer', en: '👑 Queen\'s Diadem', wo: '👑 Diadème Lingeer' }
+        artworkId: 'oeuvre6',
+        text: { fr: '🔨 Marteau de Forgeron', en: '🔨 Blacksmith Hammer', wo: '🔨 Marteau Forgeron' }
       },
       { 
-        pitch: -6, 
-        yaw: 180, 
-        type: 'scene',
-        targetRoom: 'entrance',
-        text: { fr: '← Retour au Hall', en: '← Back to Hall', wo: '← Dellu Hall' }
+        pitch: 8, 
+        yaw: 50, 
+        type: 'info',
+        artworkId: 'oeuvre3',
+        text: { fr: '🪡 Aiguille Traditionnelle', en: '🪡 Traditional Needle', wo: '🪡 Aiguille Aada' }
       },
       { 
         pitch: -8, 
-        yaw: 90, 
+        yaw: 170, 
         type: 'scene',
-        targetRoom: 'mali',
-        text: { fr: '← Empire du Mali', en: '← Mali Empire', wo: '← Empire Mali' }
+        targetRoom: 'welcome',
+        text: { fr: '← Retour Accueil', en: '← Back to Welcome', wo: '← Dellu Dugg' }
+      },
+      { 
+        pitch: -11, 
+        yaw: 80, 
+        type: 'scene',
+        targetRoom: 'ancient',
+        text: { fr: '← Salle des Antiquités', en: '← Antiquities Room', wo: '← Biir Antiquité' }
       }
     ]
   }
@@ -315,8 +314,8 @@ declare global {
 export const VirtualTour = () => {
   const { i18n } = useTranslation();
   const lang = i18n.language as 'fr' | 'en' | 'wo';
-  const { darkMode } = useTheme(); // AJOUTER CETTE LIGNE
-  const [currentRoomId, setCurrentRoomId] = useState('entrance');
+  const { darkMode } = useTheme();
+  const [currentRoomId, setCurrentRoomId] = useState('welcome');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -347,13 +346,13 @@ export const VirtualTour = () => {
     link.href = 'https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css';
 
     script.onload = () => {
-      console.log('✅ Pannellum chargé avec succès');
+      console.log('✅ Pannellum loaded successfully');
       setScriptLoaded(true);
       setIsLoading(false);
     };
 
     script.onerror = () => {
-      console.error('❌ Erreur chargement Pannellum');
+      console.error('❌ Error loading Pannellum');
       setIsLoading(false);
     };
 
@@ -367,7 +366,7 @@ export const VirtualTour = () => {
         try {
           pannellumInstance.current.destroy();
         } catch (e) {
-          console.error('Erreur destruction viewer:', e);
+          console.error('Error destroying viewer:', e);
         }
       }
       if (audioRef.current) {
@@ -375,7 +374,7 @@ export const VirtualTour = () => {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [scriptLoaded]);
 
   // Initialiser le viewer 360°
   useEffect(() => {
@@ -391,7 +390,7 @@ export const VirtualTour = () => {
       
       museumRooms.forEach(room => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const hotspots: any[] = room.hotspots.map((spot, idx) => {
+        const hotspots: any[] = room.hotspots.map((spot) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const hotspot: any = {
             pitch: spot.pitch,
@@ -399,6 +398,7 @@ export const VirtualTour = () => {
             type: spot.type === 'info' ? 'info' : 'scene',
             text: spot.text[lang],
             cssClass: spot.type === 'info' ? 'custom-hotspot-artwork' : 'custom-hotspot-scene',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             createTooltipFunc: (hotSpotDiv: HTMLElement, args: any) => {
               const tooltip = document.createElement('div');
               tooltip.className = 'custom-tooltip';
@@ -413,7 +413,7 @@ export const VirtualTour = () => {
 
           if (spot.type === 'info') {
             hotspot.clickHandlerFunc = () => {
-              console.log('🎨 Œuvre sélectionnée:', spot.artworkId);
+              console.log('🎨 Artwork selected:', spot.artworkId);
               setSelectedArtwork(spot.artworkId!);
             };
           } else {
@@ -437,7 +437,7 @@ export const VirtualTour = () => {
         };
       });
 
-      console.log('🏛️ Initialisation du musée virtuel:', Object.keys(scenes));
+      console.log('🏛️ Initializing virtual museum:', Object.keys(scenes));
 
       pannellumInstance.current = window.pannellum.viewer(viewerRef.current, {
         default: {
@@ -448,9 +448,9 @@ export const VirtualTour = () => {
         scenes: scenes
       });
 
-      // Événements
+      // Events
       pannellumInstance.current.on('scenechange', (sceneId: string) => {
-        console.log('🚪 Changement de salle:', sceneId);
+        console.log('🚪 Room change:', sceneId);
         setCurrentRoomId(sceneId);
         setSelectedArtwork(null);
         playAmbientSound(sceneId);
@@ -461,20 +461,21 @@ export const VirtualTour = () => {
           const yaw = pannellumInstance.current.getYaw();
           const pitch = pannellumInstance.current.getPitch();
           setViewAngle({ yaw: Math.round(yaw), pitch: Math.round(pitch) });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
         } catch (e) {}
       });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       pannellumInstance.current.on('error', (err: any) => {
-        console.error('❌ Erreur Pannellum:', err);
+        console.error('❌ Pannellum error:', err);
       });
 
     } catch (error) {
-      console.error('❌ Erreur initialisation viewer:', error);
+      console.error('❌ Viewer initialization error:', error);
     }
-  }, [scriptLoaded, lang]);
+  }, [scriptLoaded, lang, currentRoomId]);
 
-  // Audio ambiant
+  // Ambient audio
   const playAmbientSound = (roomId: string) => {
     if (!audioEnabled) return;
     
@@ -497,7 +498,7 @@ export const VirtualTour = () => {
       
       audioRef.current.load();
     } catch (error) {
-      console.error('Erreur audio:', error);
+      console.error('Audio error:', error);
     }
   };
 
@@ -507,7 +508,7 @@ export const VirtualTour = () => {
       try {
         pannellumInstance.current.loadScene(roomId);
       } catch (error) {
-        console.error('Erreur changement de scène:', error);
+        console.error('Scene change error:', error);
       }
     }
   };
@@ -524,7 +525,7 @@ export const VirtualTour = () => {
     goToRoom(museumRooms[prevIndex].id);
   };
 
-  // Plein écran
+  // Full screen
   const toggleFullscreen = async () => {
     if (!containerRef.current) return;
     
@@ -537,7 +538,7 @@ export const VirtualTour = () => {
         setIsFullscreen(false);
       }
     } catch (error) {
-      console.error('Erreur fullscreen:', error);
+      console.error('Fullscreen error:', error);
     }
   };
 
@@ -553,9 +554,9 @@ export const VirtualTour = () => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-50 text-black'} transition-all duration-300`}>
       {/* Header élégant */}
-      <div className={`${darkMode ? 'bg-gradient-to-r from-black via-gray-900 to-black border-b border-[#D4AF37]/30' : 'bg-gradient-to-r from-white via-gray-50 to-white border-b border-gray-300'} py-5 backdrop-blur-md`}>
+      <div className={`${darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-700 border-b border-[#D4AF37]/30' : 'bg-gradient-to-r from-white to-gray-50 border-b border-gray-300'} py-5 backdrop-blur-md transition-all duration-300`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex-1">
@@ -576,7 +577,7 @@ export const VirtualTour = () => {
             <div className="flex items-center space-x-3">
               <button
                 onClick={toggleAudio}
-                className={`p-3 ${darkMode ? 'bg-gray-900 text-gray-300 border-gray-700 hover:border-[#D4AF37]' : 'bg-white text-gray-600 border-gray-300 hover:border-[#D4AF37]'} rounded-full border hover:text-[#D4AF37] transition-all`}
+                className={`p-3 ${darkMode ? 'bg-gray-700 text-gray-300 border-gray-600 hover:border-[#D4AF37]' : 'bg-white text-gray-600 border-gray-300 hover:border-[#D4AF37]'} rounded-full border hover:text-[#D4AF37] transition-all duration-300`}
                 title={audioEnabled ? 'Désactiver l\'audio' : 'Activer l\'audio'}
               >
                 {audioEnabled ? <Volume2 size={22} /> : <VolumeX size={22} />}
@@ -584,7 +585,7 @@ export const VirtualTour = () => {
               
               <button
                 onClick={toggleFullscreen}
-                className={`p-3 ${darkMode ? 'bg-gray-900 text-gray-300 border-gray-700 hover:border-[#D4AF37]' : 'bg-white text-gray-600 border-gray-300 hover:border-[#D4AF37]'} rounded-full border hover:text-[#D4AF37] transition-all`}
+                className={`p-3 ${darkMode ? 'bg-gray-700 text-gray-300 border-gray-600 hover:border-[#D4AF37]' : 'bg-white text-gray-600 border-gray-300 hover:border-[#D4AF37]'} rounded-full border hover:text-[#D4AF37] transition-all duration-300`}
                 title="Plein écran"
               >
                 <Maximize2 size={22} />
@@ -592,7 +593,7 @@ export const VirtualTour = () => {
               
               <Link 
                 to="/" 
-                className="p-3 bg-[#D4AF37] text-black rounded-full hover:bg-yellow-500 transition-all"
+                className="p-3 bg-[#D4AF37] text-black rounded-full hover:bg-yellow-500 transition-all duration-300"
                 title="Retour à l'accueil"
               >
                 <Home size={22} />
@@ -603,7 +604,7 @@ export const VirtualTour = () => {
       </div>
 
       {/* Viewer 360° */}
-      <div className={`relative w-full h-[82vh] ${darkMode ? 'bg-black' : 'bg-gray-200'}`}>
+      <div className={`relative w-full h-[82vh] ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} transition-all duration-300`}>
         {isLoading ? (
           <div className="flex flex-col items-center justify-center h-full">
             <div className="relative">
@@ -618,7 +619,7 @@ export const VirtualTour = () => {
             <div ref={viewerRef} className="w-full h-full" id="panorama-viewer" />
 
             {/* Instructions flottantes */}
-            <div className={`absolute top-4 left-4 ${darkMode ? 'bg-black/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-5 py-4 rounded-xl border max-w-sm backdrop-blur-lg`}>
+            <div className={`absolute top-4 left-4 ${darkMode ? 'bg-gray-700/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-5 py-4 rounded-xl border max-w-sm backdrop-blur-lg transition-all duration-300`}>
               <div className="flex items-start space-x-3">
                 <Info className="text-[#D4AF37] flex-shrink-0 mt-0.5" size={20} />
                 <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -634,7 +635,7 @@ export const VirtualTour = () => {
             </div>
 
             {/* Indicateur d'angle de vue */}
-            <div className={`absolute top-4 right-4 ${darkMode ? 'bg-black/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-4 py-3 rounded-xl border backdrop-blur-lg`}>
+            <div className={`absolute top-4 right-4 ${darkMode ? 'bg-gray-700/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-4 py-3 rounded-xl border backdrop-blur-lg transition-all duration-300`}>
               <div className="flex items-center space-x-3">
                 <Compass className="text-[#D4AF37]" size={20} />
                 <div className="text-sm">
@@ -650,14 +651,14 @@ export const VirtualTour = () => {
             <div className="absolute bottom-24 right-4">
               <button
                 onClick={() => setIsMapOpen(!isMapOpen)}
-                className="flex items-center space-x-2 px-5 py-3 bg-gradient-to-r from-[#D4AF37] to-yellow-500 text-black font-bold rounded-full hover:from-yellow-500 hover:to-[#D4AF37] transition-all shadow-xl shadow-[#D4AF37]/30"
+                className="flex items-center space-x-2 px-5 py-3 bg-gradient-to-r from-[#D4AF37] to-yellow-500 text-black font-bold rounded-full hover:from-yellow-500 hover:to-[#D4AF37] transition-all duration-300 shadow-xl shadow-[#D4AF37]/30"
               >
                 <MapPin size={20} />
                 <span>Plan du Musée</span>
               </button>
               
               {isMapOpen && (
-                <div className={`absolute bottom-full right-0 mb-3 ${darkMode ? 'bg-black/95 border-[#D4AF37]' : 'bg-white/95 border-gray-300'} rounded-xl border p-5 w-80 max-h-96 overflow-y-auto backdrop-blur-xl`}>
+                <div className={`absolute bottom-full right-0 mb-3 ${darkMode ? 'bg-gray-700/95 border-[#D4AF37]' : 'bg-white/95 border-gray-300'} rounded-xl border p-5 w-80 max-h-96 overflow-y-auto backdrop-blur-xl transition-all duration-300`}>
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-[#D4AF37] font-bold text-lg flex items-center">
                       <MapPin size={18} className="mr-2" />
@@ -665,7 +666,7 @@ export const VirtualTour = () => {
                     </h3>
                     <button
                       onClick={() => setIsMapOpen(false)}
-                      className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'} text-2xl`}
+                      className={`${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'} text-2xl transition-colors duration-300`}
                     >
                       ×
                     </button>
@@ -679,11 +680,11 @@ export const VirtualTour = () => {
                           goToRoom(room.id);
                           setIsMapOpen(false);
                         }}
-                        className={`block w-full text-left px-4 py-3 rounded-lg transition-all ${
+                        className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
                           room.id === currentRoomId
                             ? 'bg-gradient-to-r from-[#D4AF37] to-yellow-500 text-black font-bold shadow-lg'
                             : darkMode 
-                              ? 'text-gray-300 hover:text-white hover:bg-gray-800 border border-gray-700'
+                              ? 'text-gray-300 hover:text-white hover:bg-gray-600 border border-gray-600'
                               : 'text-gray-700 hover:text-black hover:bg-gray-100 border border-gray-300'
                         }`}
                       >
@@ -709,13 +710,13 @@ export const VirtualTour = () => {
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-4">
               <button
                 onClick={goToPreviousRoom}
-                className={`p-4 ${darkMode ? 'bg-black/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} text-[#D4AF37] rounded-full border-2 hover:bg-[#D4AF37] hover:text-black transition-all backdrop-blur-lg shadow-xl`}
+                className={`p-4 ${darkMode ? 'bg-gray-700/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} text-[#D4AF37] rounded-full border-2 hover:bg-[#D4AF37] hover:text-black transition-all duration-300 backdrop-blur-lg shadow-xl`}
                 title="Salle précédente"
               >
                 <ChevronLeft size={28} />
               </button>
               
-              <div className={`px-6 py-3 ${darkMode ? 'bg-black/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} rounded-full border backdrop-blur-lg`}>
+              <div className={`px-6 py-3 ${darkMode ? 'bg-gray-700/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} rounded-full border backdrop-blur-lg transition-all duration-300`}>
                 <p className="text-[#D4AF37] font-bold text-sm">
                   Salle {museumRooms.findIndex(r => r.id === currentRoomId) + 1} / {museumRooms.length}
                 </p>
@@ -723,7 +724,7 @@ export const VirtualTour = () => {
               
               <button
                 onClick={goToNextRoom}
-                className={`p-4 ${darkMode ? 'bg-black/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} text-[#D4AF37] rounded-full border-2 hover:bg-[#D4AF37] hover:text-black transition-all backdrop-blur-lg shadow-xl`}
+                className={`p-4 ${darkMode ? 'bg-gray-700/90 border-[#D4AF37]/50' : 'bg-white/90 border-gray-300'} text-[#D4AF37] rounded-full border-2 hover:bg-[#D4AF37] hover:text-black transition-all duration-300 backdrop-blur-lg shadow-xl`}
                 title="Salle suivante"
               >
                 <ChevronRight size={28} />
@@ -736,7 +737,7 @@ export const VirtualTour = () => {
       {/* Modal œuvre */}
       {selectedArtwork && currentArtwork && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className={`${darkMode ? 'bg-gradient-to-br from-gray-900 to-black border-[#D4AF37]' : 'bg-white border-gray-300'} rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-2 shadow-2xl shadow-[#D4AF37]/20`}>
+          <div className={`${darkMode ? 'bg-gradient-to-br from-gray-700 to-gray-800 border-[#D4AF37]' : 'bg-white border-gray-300'} rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-2 shadow-2xl shadow-[#D4AF37]/20 transition-all duration-300`}>
             <div className="p-8">
               <div className="flex justify-between items-start mb-6">
                 <div className="flex-1">
@@ -747,29 +748,28 @@ export const VirtualTour = () => {
                   <h2 className={`text-3xl md:text-4xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-2`}>
                     {currentArtwork.title[lang]}
                   </h2>
-                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} text-lg`}>{currentArtwork.artist}</p>
                   <p className={`${darkMode ? 'text-gray-500' : 'text-gray-600'} text-sm mt-1`}>{currentArtwork.period}</p>
                 </div>
                 <button
                   onClick={() => setSelectedArtwork(null)}
-                  className={`${darkMode ? 'text-gray-400 hover:text-white hover:bg-red-900/50' : 'text-gray-600 hover:text-black hover:bg-red-100'} rounded-full p-2 transition-all text-3xl`}
+                  className={`${darkMode ? 'text-gray-400 hover:text-white hover:bg-red-900/50' : 'text-gray-600 hover:text-black hover:bg-red-100'} rounded-full p-2 transition-all duration-300 text-3xl`}
                 >
                   ×
                 </button>
               </div>
 
-              <div className="relative mb-6 rounded-xl overflow-hidden border-2 border-[#D4AF37]/30">
+              <div className="relative mb-6 rounded-xl overflow-hidden border-2 border-[#D4AF37]/30 transition-all duration-300 hover:shadow-lg">
                 <img
                   src={currentArtwork.imageUrl}
                   alt={currentArtwork.title[lang]}
                   className="w-full h-96 object-cover"
                 />
-                <div className={`absolute top-4 left-4 px-3 py-1.5 ${darkMode ? 'bg-black/80 border-[#D4AF37]/50' : 'bg-white/80 border-gray-300'} rounded-full border backdrop-blur-sm`}>
+                <div className={`absolute top-4 left-4 px-3 py-1.5 ${darkMode ? 'bg-gray-700/80 border-[#D4AF37]/50' : 'bg-white/80 border-gray-300'} rounded-full border backdrop-blur-sm transition-all duration-300`}>
                   <p className="text-[#D4AF37] text-sm font-semibold">{currentArtwork.category}</p>
                 </div>
               </div>
 
-              <div className={`${darkMode ? 'bg-gray-900/50 border-gray-700' : 'bg-gray-50 border-gray-300'} rounded-xl p-6 mb-6 border`}>
+              <div className={`${darkMode ? 'bg-gray-700/50 border-gray-600' : 'bg-gray-50 border-gray-300'} rounded-xl p-6 mb-6 border transition-all duration-300 hover:shadow-md`}>
                 <h3 className="text-[#D4AF37] font-bold text-lg mb-3">Description</h3>
                 <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                   {currentArtwork.description[lang]}
@@ -777,30 +777,26 @@ export const VirtualTour = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className={`${darkMode ? 'bg-gray-900/50 border-gray-700' : 'bg-gray-50 border-gray-300'} rounded-lg p-4 border`}>
+                <div className={`${darkMode ? 'bg-gray-700/50 border-gray-600' : 'bg-gray-50 border-gray-300'} rounded-lg p-4 border transition-all duration-300 hover:shadow-md`}>
                   <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mb-1`}>Origine</p>
-                  <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold`}>{currentArtwork.region || 'Sénégal'}</p>
+                  <p className={`${darkMode ? 'text-gray-100' : 'text-black'} font-semibold`}>{currentArtwork.origin}</p>
                 </div>
-                <div className={`${darkMode ? 'bg-gray-900/50 border-gray-700' : 'bg-gray-50 border-gray-300'} rounded-lg p-4 border`}>
+                <div className={`${darkMode ? 'bg-gray-700/50 border-gray-600' : 'bg-gray-50 border-gray-300'} rounded-lg p-4 border transition-all duration-300 hover:shadow-md`}>
                   <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mb-1`}>Période</p>
-                  <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold`}>{currentArtwork.period}</p>
-                </div>
-                <div className={`${darkMode ? 'bg-gray-900/50 border-gray-700' : 'bg-gray-50 border-gray-300'} rounded-lg p-4 border`}>
-                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mb-1`}>Matériaux</p>
-                  <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold`}>{currentArtwork.materials || 'Traditionnel'}</p>
+                  <p className={`${darkMode ? 'text-gray-100' : 'text-black'} font-semibold`}>{currentArtwork.period}</p>
                 </div>
               </div>
 
               <div className="flex flex-col md:flex-row gap-3">
                 <Link
                   to={`/oeuvre/${currentArtwork.id}`}
-                  className="flex-1 px-6 py-4 bg-gradient-to-r from-[#D4AF37] to-yellow-500 text-black font-bold rounded-xl hover:from-yellow-500 hover:to-[#D4AF37] transition-all text-center shadow-lg shadow-[#D4AF37]/20"
+                  className="flex-1 px-6 py-4 bg-gradient-to-r from-[#D4AF37] to-yellow-500 text-black font-bold rounded-xl hover:from-yellow-500 hover:to-[#D4AF37] transition-all duration-300 text-center shadow-lg shadow-[#D4AF37]/20 hover:scale-105"
                 >
                   📖 Voir les détails complets
                 </Link>
                 <Link
                   to={`/ar/${currentArtwork.id}`}
-                  className="flex-1 px-6 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-black transition-all text-center"
+                  className="flex-1 px-6 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-black transition-all duration-300 text-center hover:scale-105"
                 >
                   🥽 Visualiser en AR
                 </Link>
@@ -810,7 +806,7 @@ export const VirtualTour = () => {
         </div>
       )}
 
-      {/* Les styles CSS restent identiques */}
+      {/* Styles CSS */}
       <style>{`
         .custom-hotspot-artwork {
           background: radial-gradient(circle, rgba(212, 175, 55, 0.9) 0%, rgba(212, 175, 55, 0.6) 100%);

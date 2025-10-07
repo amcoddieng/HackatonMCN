@@ -63,7 +63,6 @@ function App() {
               {/* Connexion & Inscription */}
               <Route path="/auth" element={<Auth />} />
 
-
               {/* Route 404 - Redirection vers Home */}
               <Route path="*" element={<Home />} />
             </Routes>

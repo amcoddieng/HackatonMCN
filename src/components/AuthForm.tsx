@@ -61,7 +61,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-black"} max-w-md mx-auto mt-12 p-6 rounded-lg shadow-lg`}>
+    <div className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-black"} max-w-md mx-auto mt-12 p-6 rounded-lg shadow-lg transition-all duration-300`}>
       <h2 className="text-2xl font-bold mb-2">
         {isLogin ? "Connexion" : "Inscription"}
       </h2>
@@ -82,7 +82,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
               placeholder="Votre nom"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded`}
+              className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded transition-all duration-300 focus:ring-2 focus:ring-yellow-400`}
             />
           </div>
         )}
@@ -96,7 +96,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             placeholder="votre@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded`}
+            className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded transition-all duration-300 focus:ring-2 focus:ring-yellow-400`}
             required
           />
         </div>
@@ -110,7 +110,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded`}
+            className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded transition-all duration-300 focus:ring-2 focus:ring-yellow-400`}
             required
           />
         </div>
@@ -125,7 +125,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
               placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded ${!passwordsMatch ? "border border-red-500" : ""}`}
+              className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} w-full px-3 py-2 rounded transition-all duration-300 focus:ring-2 focus:ring-yellow-400 ${!passwordsMatch ? "border border-red-500" : ""}`}
               required={!isLogin}
             />
             {!passwordsMatch && (
@@ -144,7 +144,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
         <button
           type="submit"
           disabled={!isLogin && !passwordsMatch}
-          className={`w-full py-2 ${darkMode ? "bg-yellow-500 text-black hover:bg-yellow-600" : "bg-yellow-500 text-black hover:bg-yellow-600"} font-bold rounded ${!isLogin && !passwordsMatch ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-full py-2 ${darkMode ? "bg-yellow-500 text-black hover:bg-yellow-600" : "bg-yellow-500 text-black hover:bg-yellow-600"} font-bold rounded transition-all duration-300 hover:shadow-lg ${!isLogin && !passwordsMatch ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           {isLogin ? "Se connecter" : "S'inscrire"}
         </button>
@@ -158,7 +158,7 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
             setError("");
             setSuccessMessage("");
           }}
-          className="hover:underline"
+          className="hover:underline transition-all duration-300"
         >
           {isLogin
             ? "Pas encore de compte ? S'inscrire"

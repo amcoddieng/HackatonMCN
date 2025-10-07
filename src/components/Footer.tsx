@@ -138,7 +138,7 @@ export const Footer = () => {
   return (
     <footer
       className={`
-        ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-white border-gray-200'}
+        ${darkMode ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-200'}
         border-t relative overflow-hidden transition-colors duration-300
       `}
     >
@@ -177,8 +177,8 @@ export const Footer = () => {
         >
           <div
             className={`
-              ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-gray-50 border-gray-200'}
-              backdrop-blur-sm rounded-2xl p-8 border
+              ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}
+              backdrop-blur-sm rounded-2xl p-8 border transition-all duration-300 hover:shadow-lg
             `}
           >
             <h3
@@ -193,7 +193,7 @@ export const Footer = () => {
 
             {/*  Carte Leaflet  */}
             <div className="relative mb-8">
-              <div className="relative h-96 rounded-xl overflow-hidden bg-gray-800">
+              <div className="relative h-96 rounded-xl overflow-hidden bg-gray-600">
                 {!showInteractiveMap ? (
                   <div className="h-full flex items-center justify-center">
                     <div className="text-center">
@@ -242,7 +242,7 @@ export const Footer = () => {
                   className={`
                     p-3 rounded-lg transition-all duration-300 shadow-lg backdrop-blur-sm
                     ${darkMode
-                      ? 'bg-gray-950 text-[#D4AF37] hover:bg-gray-900'
+                      ? 'bg-gray-700 text-[#D4AF37] hover:bg-gray-600'
                       : 'bg-white text-[#D4AF37] hover:bg-gray-100'
                     }
                   `}
@@ -339,8 +339,8 @@ export const Footer = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             className={`
-              ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-gray-50 border-gray-200'}
-              backdrop-blur-sm rounded-2xl p-6 border h-full
+              ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}
+              backdrop-blur-sm rounded-2xl p-6 border h-full transition-all duration-300 hover:shadow-lg
             `}
           >
             <h3
@@ -453,8 +453,8 @@ export const Footer = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
             className={`
-              ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-gray-50 border-gray-200'}
-              backdrop-blur-sm rounded-2xl p-6 border h-full
+              ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-200'}
+              backdrop-blur-sm rounded-2xl p-6 border h-full transition-all duration-300 hover:shadow-lg
             `}
           >
             <h3
@@ -489,7 +489,7 @@ export const Footer = () => {
                           ? 'bg-[#D4AF37]/20 border border-[#D4AF37]/30'
                           : `${
                               darkMode
-                                ? 'bg-gray-950 hover:bg-gray-900'
+                                ? 'bg-gray-700 hover:bg-gray-600'
                                 : 'bg-white hover:bg-gray-50'
                             }`
                       }
@@ -526,7 +526,7 @@ export const Footer = () => {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="mt-4 p-4 bg-[#D4AF37]/10 rounded-lg border border-[#D4AF37]/20"
+                  className="mt-4 p-4 bg-[#D4AF37]/10 rounded-lg border border-[#D4AF37]/20 transition-all duration-300"
                 >
                   <p
                     className={`
@@ -552,7 +552,7 @@ export const Footer = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="relative border-t border-gray-700/50 pt-12 mt-16"
+          className="relative border-t border-gray-600/50 pt-12 mt-16" // Gris léger
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -660,7 +660,7 @@ export const Footer = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               className={`
-                ${darkMode ? 'bg-gray-950' : 'bg-white'}
+                ${darkMode ? 'bg-gray-700' : 'bg-white'}
                 rounded-2xl p-6 max-w-6xl w-full max-h-[90vh] overflow-hidden
               `}
               onClick={(e) => e.stopPropagation()}
@@ -678,7 +678,7 @@ export const Footer = () => {
                   onClick={() => setShowInteractiveMap(false)}
                   className={`
                     p-2 rounded-lg transition-colors
-                    ${darkMode ? 'hover:bg-gray-900' : 'hover:bg-gray-100'}
+                    ${darkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-100'}
                   `}
                 >
                   <X

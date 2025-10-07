@@ -41,12 +41,12 @@ export const Scan = () => {
   }, [navigate]);
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-black'} flex items-center justify-center`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-50 text-black'} flex items-center justify-center transition-all duration-300`}>
       <div className="text-center">
         <h1 className={`text-4xl font-bold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-4`}>{t('scanArtwork', { defaultValue: "Scanner l'œuvre" })}</h1>
         <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-8`}>{t('scanInstructions', { defaultValue: "Dirigez votre caméra vers le QR code" })}</p>
 
-        <div className="mt-8 w-64 h-64 border-4 border-yellow-600 rounded-lg mx-auto overflow-hidden">
+        <div className="mt-8 w-64 h-64 border-4 border-yellow-600 rounded-lg mx-auto overflow-hidden shadow-lg transition-all duration-300">
           <video ref={videoRef} className="w-full h-full object-cover" autoPlay playsInline />
         </div>
 

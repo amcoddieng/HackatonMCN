@@ -73,7 +73,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className={`min-h-screen ${darkMode ? "bg-gray-950 text-gray-100" : "bg-white text-black"} p-6`}>
+    <div className={`min-h-screen ${darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-black"} p-6 transition-all duration-300`}>
       <div className="max-w-7xl mx-auto space-y-8">
         {/* En-tête */}
         <div>
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
             return (
               <div
                 key={stat.title}
-                className={`${darkMode ? "bg-gray-900 border-gray-800" : "bg-gray-50 border-gray-200"} p-4 rounded-lg border hover:border-yellow-400 transition-all`}
+                className={`${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"} p-4 rounded-lg border hover:border-yellow-400 transition-all duration-300 hover:shadow-lg hover:scale-105`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <h3 className={`${darkMode ? "text-gray-300" : "text-gray-700"} text-sm font-medium`}>{stat.title}</h3>
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
         {/* Section Contributions & Réservations */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* Dernières Contributions */}
-          <div className={`${darkMode ? "bg-gray-900 border-gray-800" : "bg-gray-50 border-gray-200"} p-6 rounded-lg border`}>
+          <div className={`${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"} p-6 rounded-lg border transition-all duration-300 hover:shadow-lg`}>
             <h2 className="text-xl font-semibold text-yellow-400 mb-2">
               {t("admin.recentContributions", "Dernières Contributions")}
             </h2>
@@ -121,7 +121,7 @@ export default function AdminDashboard() {
                 {recentContributions.map((c) => (
                   <div
                     key={c.id}
-                    className="border-l-4 border-yellow-400 pl-4 py-2 bg-gray-800 rounded-r"
+                    className="border-l-4 border-yellow-400 pl-4 py-2 bg-gray-600 rounded-r transition-all duration-300 hover:bg-gray-500"
                   >
                     <p className="text-sm text-gray-300 line-clamp-2 mb-2">{c.message}</p>
                     <div className="flex justify-between items-center">
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Dernières Réservations */}
-          <div className={`${darkMode ? "bg-gray-900 border-gray-800" : "bg-gray-50 border-gray-200"} p-6 rounded-lg border`}>
+          <div className={`${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-50 border-gray-200"} p-6 rounded-lg border transition-all duration-300 hover:shadow-lg`}>
             <h2 className="text-xl font-semibold text-yellow-400 mb-2">
               {t("admin.recentReservations", "Dernières Réservations")}
             </h2>
@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                 {recentReservations.map((r) => (
                   <div
                     key={r.id}
-                    className="border-l-4 border-yellow-400 pl-4 py-2 bg-gray-800 rounded-r"
+                    className="border-l-4 border-yellow-400 pl-4 py-2 bg-gray-600 rounded-r transition-all duration-300 hover:bg-gray-500"
                   >
                     <div className="flex justify-between mb-1">
                       <p className="font-medium text-white">{r.name}</p>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
         <div className="text-center">
           <button
             onClick={loadData}
-            className="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors"
+            className="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-all duration-300 hover:shadow-lg"
           >
             {t("admin.refresh", "Rafraîchir les données")}
           </button>

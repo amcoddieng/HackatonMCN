@@ -19,7 +19,7 @@ export const Admin = () => {
 
   if (!user || !user.isAdmin) {
     return (
-      <div className={`min-h-screen ${darkMode ? "bg-gray-950 text-gray-100" : "bg-white text-black"} flex flex-col items-center justify-center p-6`}>
+      <div className={`min-h-screen ${darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-black"} flex flex-col items-center justify-center p-6 transition-all duration-300`}>
         <p className="text-xl text-red-400 mb-6">
           {t("admin.accessDenied") || "Accès refusé. Connexion administrateur requise."}
         </p>

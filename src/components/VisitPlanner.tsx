@@ -1,4 +1,3 @@
-// src/components/VisitPlanner.tsx
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { addReservation } from "../utils/localStorageHelpers";
@@ -44,7 +43,7 @@ export default function VisitPlanner() {
 
   if (submitted) {
     return (
-      <div className={`max-w-2xl mx-auto ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-white border-gray-200'} border p-8 rounded-lg shadow-lg text-center`}>
+      <div className={`max-w-2xl mx-auto ${darkMode ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-200'} border p-8 rounded-lg shadow-lg text-center transition-all duration-300`}>
         <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h3 className={`text-2xl font-bold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-2`}>
           {t("visitPlanner.confirmed", "Réservation confirmée !")}
@@ -57,7 +56,7 @@ export default function VisitPlanner() {
   }
 
   return (
-    <div className={`max-w-2xl mx-auto ${darkMode ? 'bg-gray-950 border-gray-700' : 'bg-white border-gray-200'} border p-8 rounded-lg shadow-lg`}>
+    <div className={`max-w-2xl mx-auto ${darkMode ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-200'} border p-8 rounded-lg shadow-lg transition-all duration-300`}>
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Calendar className="h-6 w-6 text-yellow-400" />
@@ -82,7 +81,7 @@ export default function VisitPlanner() {
             placeholder={t("visitPlanner.namePlaceholder", "Votre nom complet")}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-900 border-gray-700 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition`}
+            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
         </div>
@@ -98,7 +97,7 @@ export default function VisitPlanner() {
             placeholder={t("visitPlanner.emailPlaceholder", "votre@email.com")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-900 border-gray-700 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition`}
+            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
         </div>
@@ -115,7 +114,7 @@ export default function VisitPlanner() {
               value={date}
               min={new Date().toISOString().split("T")[0]}
               onChange={(e) => setDate(e.target.value)}
-              className={`p-3 rounded-lg ${darkMode ? 'bg-gray-900 border-gray-700 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition`}
+              className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
               required
             />
           </div>
@@ -130,7 +129,7 @@ export default function VisitPlanner() {
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className={`p-3 rounded-lg ${darkMode ? 'bg-gray-900 border-gray-700 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition`}
+              className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             />
           </div>
         </div>
@@ -147,7 +146,7 @@ export default function VisitPlanner() {
             max={50}
             value={groupSize}
             onChange={(e) => setGroupSize(Number.parseInt(e.target.value) || 1)}
-            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-900 border-gray-700 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition`}
+            className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100' : 'bg-gray-100 border-gray-300 text-black'} border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
           <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
@@ -157,7 +156,7 @@ export default function VisitPlanner() {
 
         <button
           type="submit"
-          className={`w-full p-4 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black font-bold transition-all transform hover:scale-105 ${
+          className={`w-full p-4 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-black font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
             groupSize < 1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={groupSize < 1}
@@ -166,7 +165,7 @@ export default function VisitPlanner() {
         </button>
       </form>
 
-      <div className={`mt-6 p-4 ${darkMode ? 'bg-gray-900 border-gray-700' : 'bg-gray-100 border-gray-300'} rounded-lg border`}>
+      <div className={`mt-6 p-4 ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-100 border-gray-300'} rounded-lg border transition-all duration-300`}>
         <h3 className={`text-sm font-semibold ${darkMode ? 'text-yellow-400' : 'text-yellow-600'} mb-2`}>
           {t("visitPlanner.infoTitle", "Informations importantes")}
         </h3>

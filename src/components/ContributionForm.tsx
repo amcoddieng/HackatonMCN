@@ -33,7 +33,7 @@ export default function ContributionForm() {
 
   if (submitted) {
     return (
-      <div className={`${darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-black"} max-w-2xl mx-auto p-6 rounded-lg shadow text-center`}>
+      <div className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-black"} max-w-2xl mx-auto p-6 rounded-lg shadow-lg text-center transition-all duration-300`}>
         <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h3 className="text-2xl font-bold mb-2">Merci pour votre contribution !</h3>
         <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
@@ -44,7 +44,7 @@ export default function ContributionForm() {
   }
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-black"} max-w-2xl mx-auto p-6 rounded-lg shadow`}>
+    <div className={`${darkMode ? "bg-gray-700 text-gray-100" : "bg-white text-black"} max-w-2xl mx-auto p-6 rounded-lg shadow-lg transition-all duration-300`}>
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-1">
           <MessageSquare className="h-5 w-5 text-yellow-400" />
@@ -66,7 +66,7 @@ export default function ContributionForm() {
             placeholder="Votre nom"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400`}
+            className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
         </div>
@@ -81,7 +81,7 @@ export default function ContributionForm() {
             placeholder="votre@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400`}
+            className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
         </div>
@@ -96,7 +96,7 @@ export default function ContributionForm() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={6}
-            className={`${darkMode ? "bg-gray-800 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400`}
+            className={`${darkMode ? "bg-gray-600 text-gray-100" : "bg-gray-100 text-black"} p-2 rounded resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-300`}
             required
           />
           <p className={`${darkMode ? "text-xs text-gray-500 mt-1" : "text-xs text-gray-600 mt-1"}`}>Minimum 10 caractères</p>
@@ -104,7 +104,7 @@ export default function ContributionForm() {
 
         <button
           type="submit"
-          className={`w-full p-3 rounded bg-yellow-500 hover:bg-yellow-600 text-black font-bold transition ${message.length < 10 ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-full p-3 rounded bg-yellow-500 hover:bg-yellow-600 text-black font-bold transition-all duration-300 hover:shadow-lg ${message.length < 10 ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={message.length < 10}
         >
           Envoyer ma contribution

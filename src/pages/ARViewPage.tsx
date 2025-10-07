@@ -1,5 +1,4 @@
 // src/pages/ARViewPage.tsx
-
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
@@ -18,7 +17,7 @@ interface Position3D {
 
 export const ARViewPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { i18n, t } = useTranslation();
+  const { i18n } = useTranslation();
   const { darkMode } = useTheme();
   const lang = i18n.language as 'fr' | 'en' | 'wo';
 
@@ -44,46 +43,25 @@ export const ARViewPage = () => {
 
   const activateCamera = async () => {
     setIsLoading(true);
-
     try {
-      const constraints = {
-        video: {
-          facingMode: { ideal: 'environment' },
-          width: { ideal: 1920 },
-          height: { ideal: 1080 },
-          aspectRatio: { ideal: 16 / 9 }
-        }
-      };
-
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: 1920, height: 1080 },
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
       }
-
       setCameraActive(true);
       setTimeout(() => setShowInfo(false), 5000);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Erreur accès caméra:', error);
-
-      let errorMessage = "Impossible d'accéder à la caméra.";
-      if (error instanceof DOMException) {
-        if (error.name === 'NotAllowedError') {
-          errorMessage = "Permission caméra refusée. Veuillez autoriser l'accès dans les paramètres.";
-        } else if (error.name === 'NotFoundError') {
-          errorMessage = "Aucune caméra détectée sur cet appareil.";
-        }
-      }
-
-      alert(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
+    if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       stream.getTracks().forEach(track => track.stop());
       videoRef.current.srcObject = null;
@@ -93,32 +71,24 @@ export const ARViewPage = () => {
 
   const captureARPhoto = () => {
     if (!videoRef.current || !canvasRef.current || !containerRef.current) return;
-
     const canvas = canvasRef.current;
     const video = videoRef.current;
     const container = containerRef.current;
-
     canvas.width = video.videoWidth || 1920;
     canvas.height = video.videoHeight || 1080;
-
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
     const artworkElement = container.querySelector('.ar-artwork') as HTMLImageElement;
     if (artworkElement) {
       const rect = artworkElement.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
-
       const scaleX = canvas.width / containerRect.width;
       const scaleY = canvas.height / containerRect.height;
-
       const x = (rect.left - containerRect.left) * scaleX;
       const y = (rect.top - containerRect.top) * scaleY;
       const width = rect.width * scaleX;
       const height = rect.height * scaleY;
-
       ctx.save();
       ctx.translate(x + width / 2, y + height / 2);
       ctx.rotate((rotation.z * Math.PI) / 180);
@@ -126,10 +96,8 @@ export const ARViewPage = () => {
       ctx.drawImage(artworkElement, -width / (2 * scale), -height / (2 * scale), width / scale, height / scale);
       ctx.restore();
     }
-
     const imageData = canvas.toDataURL('image/png');
     setCapturedImage(imageData);
-
     const link = document.createElement('a');
     link.download = `ar-${artwork?.title[lang] || 'artwork'}-${Date.now()}.png`;
     link.href = imageData;
@@ -139,10 +107,7 @@ export const ARViewPage = () => {
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 1) {
       setIsDragging(true);
-      dragStartPos.current = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY
-      };
+      dragStartPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     } else if (e.touches.length === 2) {
       setIsPinching(true);
       const distance = Math.hypot(
@@ -157,27 +122,20 @@ export const ARViewPage = () => {
     if (e.touches.length === 1 && isDragging) {
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect) return;
-
       const touch = e.touches[0];
       const deltaX = touch.clientX - dragStartPos.current.x;
       const deltaY = touch.clientY - dragStartPos.current.y;
-
       setPosition(prev => ({
         x: Math.max(10, Math.min(90, prev.x + (deltaX / rect.width) * 100)),
         y: Math.max(10, Math.min(90, prev.y + (deltaY / rect.height) * 100)),
         z: prev.z
       }));
-
-      dragStartPos.current = {
-        x: touch.clientX,
-        y: touch.clientY
-      };
+      dragStartPos.current = { x: touch.clientX, y: touch.clientY };
     } else if (e.touches.length === 2 && isPinching) {
       const distance = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
-
       const scaleChange = distance / initialPinchDistance;
       setScale(prev => Math.max(0.3, Math.min(4, prev * scaleChange)));
       setInitialPinchDistance(distance);
@@ -191,7 +149,6 @@ export const ARViewPage = () => {
 
   const toggleFullscreen = async () => {
     if (!containerRef.current) return;
-
     try {
       if (!document.fullscreenElement) {
         await containerRef.current.requestFullscreen();
@@ -209,23 +166,19 @@ export const ARViewPage = () => {
     return () => {
       stopCamera();
     };
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (!cameraActive) return;
-
     let timeout: NodeJS.Timeout;
     const resetTimeout = () => {
       setShowControls(true);
       clearTimeout(timeout);
       timeout = setTimeout(() => setShowControls(false), 3000);
     };
-
     resetTimeout();
     window.addEventListener('touchstart', resetTimeout);
     window.addEventListener('mousemove', resetTimeout);
-
     return () => {
       clearTimeout(timeout);
       window.removeEventListener('touchstart', resetTimeout);
@@ -235,10 +188,10 @@ export const ARViewPage = () => {
 
   if (!artwork) {
     return (
-      <div className={`min-h-screen ${darkMode ? 'bg-black' : 'bg-gray-50'} flex items-center justify-center`}>
+      <div className={`min-h-screen ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-50 text-black'} flex items-center justify-center transition-all duration-300`}>
         <div className="text-center">
           <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-xl mb-4`}>Œuvre non trouvée</p>
-          <Link to="/catalogue" className="text-[#D4AF37] hover:text-yellow-300">
+          <Link to="/catalogue" className="text-[#D4AF37] hover:text-yellow-300 transition-colors duration-300">
             ← Retour au catalogue
           </Link>
         </div>
@@ -247,13 +200,13 @@ export const ARViewPage = () => {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black' : 'bg-gray-100'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-black'} transition-all duration-300`}>
       {/* Header */}
-      <div className={`${darkMode ? 'bg-gradient-to-r from-black to-gray-900 border-b border-[#D4AF37]/30' : 'bg-gradient-to-r from-white to-gray-100 border-b border-gray-300'} py-4 transition-transform duration-300 ${!showControls && cameraActive ? '-translate-y-full' : 'translate-y-0'}`}>
+      <div className={`${darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-700 border-b border-[#D4AF37]/30' : 'bg-gradient-to-r from-white to-gray-100 border-b border-gray-300'} py-4 transition-all duration-300 ${!showControls && cameraActive ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="container mx-auto px-4">
           <Link
             to={`/oeuvre/${id}`}
-            className={`inline-flex items-center space-x-2 ${darkMode ? 'text-gray-400 hover:text-[#D4AF37]' : 'text-gray-600 hover:text-[#D4AF37]'} transition-colors mb-2`}
+            className={`inline-flex items-center space-x-2 ${darkMode ? 'text-gray-400 hover:text-[#D4AF37]' : 'text-gray-600 hover:text-[#D4AF37]'} transition-colors duration-300 mb-2`}
           >
             <ArrowLeft size={20} />
             <span>Retour</span>
@@ -261,14 +214,14 @@ export const ARViewPage = () => {
           <h1 className={`text-2xl md:text-4xl font-bold ${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} mb-1`}>
             Réalité Augmentée
           </h1>
-          <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>{artwork.title[lang]}</p>
+          <p className={darkMode ? 'text-gray-300' : 'text-gray-600'}>{artwork.title[lang]}</p>
         </div>
       </div>
 
       {/* Viewer AR */}
       <div
         ref={containerRef}
-        className={`relative w-full h-[85vh] ${darkMode ? 'bg-black' : 'bg-gray-200'} overflow-hidden`}
+        className={`relative w-full h-[85vh] ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} overflow-hidden transition-all duration-300`}
       >
         <canvas ref={canvasRef} className="hidden" />
 
@@ -279,7 +232,7 @@ export const ARViewPage = () => {
               <div className="absolute inset-0 rounded-full border-4 border-[#D4AF37]/20 animate-ping"></div>
             </div>
 
-            <h2 className={`text-3xl md:text-4xl font-bold ${darkMode ? 'text-white' : 'text-black'} mb-3 text-center`}>
+            <h2 className={`text-3xl md:text-4xl font-bold ${darkMode ? 'text-gray-100' : 'text-black'} mb-3 text-center`}>
               Visualisez l'œuvre dans votre espace
             </h2>
 
@@ -289,7 +242,7 @@ export const ARViewPage = () => {
               et redimensionner librement.
             </p>
 
-            <div className={`${darkMode ? 'bg-gradient-to-br from-gray-900/90 to-black/90 border-[#D4AF37]/30' : 'bg-white border-gray-300'} p-6 rounded-xl border mb-8 max-w-md backdrop-blur-sm`}>
+            <div className={`${darkMode ? 'bg-gradient-to-br from-gray-700/90 to-black/90 border-[#D4AF37]/30' : 'bg-white border-gray-300'} p-6 rounded-xl border mb-8 max-w-md backdrop-blur-sm`}>
               <div className="flex items-start space-x-4 mb-4">
                 <img
                   src={artwork.imageUrl}
@@ -297,17 +250,16 @@ export const ARViewPage = () => {
                   className="w-24 h-24 object-cover rounded-lg border-2 border-[#D4AF37]/50"
                 />
                 <div className="flex-1">
-                  <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-1`}>Œuvre sélectionnée</p>
+                  <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mb-1`}>Œuvre sélectionnée</p>
                   <p className={`${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} font-bold text-lg`}>{artwork.title[lang]}</p>
-                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} text-sm`}>{artwork.artist}</p>
                 </div>
               </div>
 
-              <div className={`border-t ${darkMode ? 'border-gray-700' : 'border-gray-300'} pt-4`}>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
+              <div className={`border-t ${darkMode ? 'border-gray-600' : 'border-gray-300'} pt-4`}>
+                <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm mb-2`}>
                   <span className={`${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} font-semibold`}>Modèle 3D :</span>
                 </p>
-                <p className={`${darkMode ? 'text-white bg-black/50' : 'text-black bg-gray-100'} font-mono text-sm px-3 py-2 rounded`}>
+                <p className={`${darkMode ? 'text-gray-100 bg-black/50' : 'text-black bg-gray-100'} font-mono text-sm px-3 py-2 rounded`}>
                   {artwork.arModel || `${artwork.id}_model.gltf`}
                 </p>
                 <div className={`flex items-center justify-between mt-3 text-xs ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
@@ -319,19 +271,19 @@ export const ARViewPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-4xl">
-              <div className={`${darkMode ? 'bg-gray-900/60 border-gray-700' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center`}>
+              <div className={`${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center transition-all duration-300 hover:shadow-lg`}>
                 <Move className="text-[#D4AF37] mx-auto mb-2" size={28} />
-                <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold mb-1`}>Déplacer</p>
+                <p className={`${darkMode ? 'text-gray-100' : 'text-black'} font-semibold mb-1`}>Déplacer</p>
                 <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>Glissez avec un doigt</p>
               </div>
-              <div className={`${darkMode ? 'bg-gray-900/60 border-gray-700' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center`}>
+              <div className={`${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center transition-all duration-300 hover:shadow-lg`}>
                 <ZoomIn className="text-[#D4AF37] mx-auto mb-2" size={28} />
-                <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold mb-1`}>Redimensionner</p>
+                <p className={`${darkMode ? 'text-gray-100' : 'text-black'} font-semibold mb-1`}>Redimensionner</p>
                 <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>Pincez avec deux doigts</p>
               </div>
-              <div className={`${darkMode ? 'bg-gray-900/60 border-gray-700' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center`}>
+              <div className={`${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'} p-4 rounded-lg border text-center transition-all duration-300 hover:shadow-lg`}>
                 <RotateCw className="text-[#D4AF37] mx-auto mb-2" size={28} />
-                <p className={`${darkMode ? 'text-white' : 'text-black'} font-semibold mb-1`}>Rotation</p>
+                <p className={`${darkMode ? 'text-gray-100' : 'text-black'} font-semibold mb-1`}>Rotation</p>
                 <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-sm`}>Utilisez les contrôles</p>
               </div>
             </div>
@@ -370,8 +322,7 @@ export const ARViewPage = () => {
             />
 
             <div className="absolute inset-0 pointer-events-none">
-              <div
-                className="absolute inset-0 opacity-5"
+              <div className="absolute inset-0 opacity-5"
                 style={{
                   backgroundImage: `
                     linear-gradient(rgba(212, 175, 55, 0.4) 1px, transparent 1px),
@@ -423,7 +374,6 @@ export const ARViewPage = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <p className={`${darkMode ? 'text-[#D4AF37]' : 'text-yellow-600'} font-bold text-lg mb-1`}>{artwork.title[lang]}</p>
-                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} text-sm mb-2`}>{artwork.artist}</p>
                     <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} text-xs`}>
                       Touchez et glissez pour déplacer • Pincez pour redimensionner
                     </p>
@@ -439,10 +389,10 @@ export const ARViewPage = () => {
             )}
 
             <div className={`absolute bottom-24 left-1/2 transform -translate-x-1/2 transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-              <div className={`flex items-center space-x-3 ${darkMode ? 'bg-black/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-8 py-4 rounded-full border backdrop-blur-lg shadow-2xl`}>
+              <div className={`flex items-center space-x-3 ${darkMode ? 'bg-black/90 border-[#D4AF37]/40' : 'bg-white/90 border-gray-300'} px-8 py-4 rounded-full border backdrop-blur-lg shadow-2xl transition-all duration-300`}>
                 <button
                   onClick={() => setRotation(r => ({ ...r, x: r.x - 15 }))}
-                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-800' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors p-2 rounded-full`}
+                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-700' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors duration-300 p-2 rounded-full`}
                   title="Rotation X -"
                 >
                   <RotateCw size={24} className="transform rotate-90" />
@@ -450,39 +400,39 @@ export const ARViewPage = () => {
 
                 <button
                   onClick={() => setRotation(r => ({ ...r, y: r.y + 45 }))}
-                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-800' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors p-2 rounded-full`}
+                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-700' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors duration-300 p-2 rounded-full`}
                   title="Rotation Y"
                 >
                   <RotateCw size={24} />
                 </button>
 
-                <div className={`w-px h-8 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'}`}></div>
+                <div className={`w-px h-8 ${darkMode ? 'bg-gray-600' : 'bg-gray-300'}`}></div>
 
                 <button
                   onClick={() => setScale(s => Math.max(0.3, s - 0.2))}
-                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-800' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors p-2 rounded-full`}
+                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-700' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors duration-300 p-2 rounded-full`}
                   title="Réduire"
                 >
                   <ZoomOut size={24} />
                 </button>
 
-                <div className={`text-[#D4AF37] font-mono text-sm px-3 py-1 ${darkMode ? 'bg-gray-900 border-[#D4AF37]/30' : 'bg-gray-100 border-[#D4AF37]/50'} rounded-full border`}>
+                <div className={`text-[#D4AF37] font-mono text-sm px-3 py-1.5 ${darkMode ? 'bg-gray-800 border-[#D4AF37]/30' : 'bg-gray-100 border-[#D4AF37]/50'} rounded-full border`}>
                   {Math.round(scale * 100)}%
                 </div>
 
                 <button
                   onClick={() => setScale(s => Math.min(4, s + 0.2))}
-                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-800' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors p-2 rounded-full`}
+                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-700' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors duration-300 p-2 rounded-full`}
                   title="Agrandir"
                 >
                   <ZoomIn size={24} />
                 </button>
 
-                <div className={`w-px h-8 ${darkMode ? 'bg-gray-700' : 'bg-gray-300'}`}></div>
+                <div className={`w-px h-8 ${darkMode ? 'bg-gray-600' : 'bg-gray-300'}`}></div>
 
                 <button
                   onClick={captureARPhoto}
-                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-800' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors p-2 rounded-full`}
+                  className={`${darkMode ? 'text-gray-300 hover:text-[#D4AF37] hover:bg-gray-700' : 'text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100'} transition-colors duration-300 p-2 rounded-full`}
                   title="Capturer"
                 >
                   <Camera size={24} />
@@ -497,14 +447,14 @@ export const ARViewPage = () => {
                   setRotation({ x: 0, y: 0, z: 0 });
                   setPosition({ x: 50, y: 50, z: 0 });
                 }}
-                className="px-5 py-2.5 bg-[#D4AF37]/20 text-[#D4AF37] text-sm font-semibold rounded-full border border-[#D4AF37]/40 backdrop-blur-md hover:bg-[#D4AF37]/30 transition-all"
+                className="px-5 py-2.5 bg-[#D4AF37]/20 text-[#D4AF37] text-sm font-semibold rounded-full border border-[#D4AF37]/40 backdrop-blur-md hover:bg-[#D4AF37]/30 transition-all duration-300"
               >
                 Réinitialiser
               </button>
 
               <button
                 onClick={() => setShowInfo(!showInfo)}
-                className={`p-2.5 ${darkMode ? 'bg-gray-900/80 text-gray-300 border-gray-700 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all`}
+                className={`p-2.5 ${darkMode ? 'bg-gray-700/80 text-gray-300 border-gray-600 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all duration-300`}
                 title="Informations"
               >
                 <Info size={20} />
@@ -512,7 +462,7 @@ export const ARViewPage = () => {
 
               <button
                 onClick={toggleFullscreen}
-                className={`p-2.5 ${darkMode ? 'bg-gray-900/80 text-gray-300 border-gray-700 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all`}
+                className={`p-2.5 ${darkMode ? 'bg-gray-700/80 text-gray-300 border-gray-600 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all duration-300`}
                 title="Plein écran"
               >
                 {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
@@ -527,7 +477,7 @@ export const ARViewPage = () => {
                     });
                   }
                 }}
-                className={`p-2.5 ${darkMode ? 'bg-gray-900/80 text-gray-300 border-gray-700 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all`}
+                className={`p-2.5 ${darkMode ? 'bg-gray-700/80 text-gray-300 border-gray-600 hover:border-[#D4AF37]/40' : 'bg-white/80 text-gray-600 border-gray-300 hover:border-[#D4AF37]/40'} rounded-full border backdrop-blur-md hover:text-[#D4AF37] transition-all duration-300`}
                 title="Partager"
               >
                 <Share2 size={20} />
@@ -535,7 +485,7 @@ export const ARViewPage = () => {
 
               <button
                 onClick={stopCamera}
-                className="p-2.5 bg-red-900/80 text-red-300 rounded-full border border-red-700 backdrop-blur-md hover:bg-red-800 hover:text-white transition-all"
+                className="p-2.5 bg-red-900/80 text-red-300 rounded-full border border-red-700 backdrop-blur-md hover:bg-red-800 hover:text-white transition-all duration-300"
                 title="Arrêter"
               >
                 <X size={20} />

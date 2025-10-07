@@ -14,7 +14,7 @@ export const Chatbot = () => {
       {/* Bouton flottant */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-yellow-600 text-black rounded-full shadow-lg hover:bg-yellow-500 transition-all z-50 flex items-center justify-center"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-yellow-600 text-black rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 z-50 flex items-center justify-center hover:scale-110"
         aria-label="Chatbot"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
@@ -22,7 +22,7 @@ export const Chatbot = () => {
 
       {/* Fenêtre du chatbot */}
       {isOpen && (
-        <div className={`fixed bottom-24 right-6 w-80 h-96 ${darkMode ? 'bg-gray-900 border-yellow-600' : 'bg-white border-gray-300'} border rounded-lg shadow-xl z-50 flex flex-col`}>
+        <div className={`fixed bottom-24 right-6 w-80 h-96 ${darkMode ? 'bg-gray-700 border-yellow-600' : 'bg-white border-gray-300'} border rounded-lg shadow-xl z-50 flex flex-col transition-all duration-300`}>
           <div className="bg-yellow-600 text-black p-4 rounded-t-lg font-bold">
             {t('chatbot.title')}
           </div>
@@ -33,7 +33,7 @@ export const Chatbot = () => {
             <input
               type="text"
               placeholder={t('chatbot.placeholder')}
-              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-800 text-gray-100 border-gray-700' : 'bg-gray-100 text-black border-gray-300'} rounded-lg border focus:outline-none focus:border-yellow-600`}
+              className={`w-full px-3 py-2 ${darkMode ? 'bg-gray-600 text-gray-100 border-gray-500' : 'bg-gray-100 text-black border-gray-300'} rounded-lg border focus:outline-none focus:border-yellow-600 transition-all duration-300`}
             />
           </div>
         </div>
